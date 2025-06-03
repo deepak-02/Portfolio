@@ -20,6 +20,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
+            <li><a href="#games">Games</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
         <div class="hamburger">
@@ -523,6 +524,23 @@
         </div>
     </section>
 
+    <section id="games" class="games-section">
+        <div id="games-background"></div>
+        <div class="container">
+            <h2 class="section-title">Fun & Games</h2>
+            <div class="games-container">
+                <div class="game-card">
+                    <h3>Flappy Bird</h3>
+                    <div id="flappyBirdGame" class="game-container"></div>
+                    <p class="game-instructions">
+                        Use SPACE or CLICK to make the bird fly<br>
+                        Press B for power boost!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
@@ -603,5 +621,113 @@
     <script src="js/animations.js"></script>
     <script src="js/three-background.js"></script>
     <script src="js/particles-network.js"></script>
+    <script src="js/games.js"></script>
+    <script src="js/games-background.js"></script>
+    <script>
+        // Initialize the Flappy Bird game
+        document.addEventListener('DOMContentLoaded', function() {
+            new FlappyBirdGame('flappyBirdGame');
+        });
+    </script>
+
+    <style>
+        .games-section {
+            padding: 80px 0;
+            background: rgba(10, 25, 47, 0.9);
+            color: #e6f1ff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #games-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .games-section .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .games-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .game-card {
+            background: rgba(17, 34, 64, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #64ffda, #00b4d8);
+            border-radius: 4px 4px 0 0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(100, 255, 218, 0.3);
+        }
+
+        .game-card h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #64ffda;
+            font-weight: 600;
+        }
+
+        .game-container {
+            width: 400px;
+            height: 600px;
+            position: relative;
+            margin: 0 auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .game-instructions {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #8892b0;
+            line-height: 1.5;
+            padding: 15px;
+            background: rgba(100, 255, 218, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                width: 100%;
+                height: 500px;
+            }
+        }
+    </style>
 </body>
 </html> 
