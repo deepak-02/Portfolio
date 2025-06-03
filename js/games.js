@@ -328,7 +328,10 @@ class FlappyBirdGame {
         
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space') {
-                e.preventDefault();
+                // Only prevent default if the game is active
+                if (this.gameStarted && !this.gameOver) {
+                    e.preventDefault();
+                }
                 this.jump();
             } else if (e.key.toLowerCase() === 'b') {
                 this.activateBooster();
@@ -559,3 +562,9 @@ if (typeof module !== 'undefined' && module.exports) {
 } else {
     window.FlappyBirdGame = FlappyBirdGame;
 }
+
+// Initialize games when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Snake
+    new SnakeGame('snake-container');
+});

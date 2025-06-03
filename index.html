@@ -531,10 +531,19 @@
             <div class="games-container">
                 <div class="game-card">
                     <h3>Flappy Bird</h3>
-                    <div id="flappyBirdGame" class="game-container"></div>
+                    <div id="flappy-bird-container" class="game-container"></div>
                     <p class="game-instructions">
                         Use SPACE or CLICK to make the bird fly<br>
                         Press B for power boost!
+                    </p>
+                </div>
+                
+                <div class="game-card">
+                    <h3>Snake</h3>
+                    <div id="snake-container" class="game-container"></div>
+                    <p class="game-instructions">
+                        Use Arrow Keys to control the snake<br>
+                        Press P to pause the game
                     </p>
                 </div>
             </div>
@@ -566,7 +575,7 @@
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
                         <div class="info-text">
-                            <h3>Location</h3>
+                            <h3>Address</h3>
                             <p>Choondasseril, Pollethai PO, Kalavoor, Alappuzha, 688522</p>
                         </div>
                     </div>
@@ -601,6 +610,12 @@
                         <a href="https://www.instagram.com/_deepak_c_k/" target="_blank" class="social-icon" data-tooltip="Instagram">
                             <i class="fab fa-instagram"></i>
                         </a>
+                        <a href="https://www.facebook.com/deepak.ck.319" target="_blank" class="social-icon" data-tooltip="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <!-- <a href="https://gitlab.com/deepak-02" target="_blank" class="social-icon" data-tooltip="GitLab">
+                            <i class="fab fa-gitlab"></i>
+                        </a> -->
                     </div>
                 </div>
             </div>
@@ -621,12 +636,16 @@
     <script src="js/animations.js"></script>
     <script src="js/three-background.js"></script>
     <script src="js/particles-network.js"></script>
+    <script src="js/snake.js"></script>
     <script src="js/games.js"></script>
     <script src="js/games-background.js"></script>
     <script>
         // Initialize the Flappy Bird game
         document.addEventListener('DOMContentLoaded', function() {
-            new FlappyBirdGame('flappyBirdGame');
+            // Clear any existing game instances
+            const container = document.getElementById('flappy-bird-container');
+            container.innerHTML = '';
+            new FlappyBirdGame('flappy-bird-container');
         });
     </script>
 
