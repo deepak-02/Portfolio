@@ -157,17 +157,34 @@ contactForm.addEventListener('submit', async (e) => {
         submitButton.disabled = true;
         submitButton.textContent = 'Sending...';
         
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        console.log('Form submitted:', Object.fromEntries(formData));
-        contactForm.reset();
-        
+        // Prepare the data for the API call
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            message: formData.get('message')
+        };
+
+        // Make the API call
+        const response = await fetch('https://portfolio-backend-yq1y.onrender.com/api/contact/mail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to send message');
+        }
+
         // Show success message
         const successMessage = document.createElement('div');
         successMessage.className = 'form-message success';
         successMessage.textContent = 'Thank you for your message! I will get back to you soon.';
         contactForm.appendChild(successMessage);
+        
+        // Reset the form
+        contactForm.reset();
         
         setTimeout(() => successMessage.remove(), 5000);
     } catch (error) {
