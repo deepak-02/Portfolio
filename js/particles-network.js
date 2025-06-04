@@ -3,8 +3,8 @@ class ParticleNetwork {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.particles = [];
-        this.numberOfParticles = 100;
-        this.minDistance = 100;
+        this.numberOfParticles = 150;
+        this.minDistance = 120;
         this.mousePosition = { x: 0, y: 0 };
         this.mouseMoved = false;
         this.colors = [
@@ -121,15 +121,17 @@ class ParticleNetwork {
         window.addEventListener('resize', () => this.resize());
         
         window.addEventListener('mousemove', (e) => {
-            this.mousePosition.x = e.clientX;
-            this.mousePosition.y = e.clientY;
+            const rect = this.canvas.getBoundingClientRect();
+            this.mousePosition.x = e.clientX - rect.left;
+            this.mousePosition.y = e.clientY - rect.top;
             this.mouseMoved = true;
         });
 
         // For touch devices
         window.addEventListener('touchmove', (e) => {
-            this.mousePosition.x = e.touches[0].clientX;
-            this.mousePosition.y = e.touches[0].clientY;
+            const rect = this.canvas.getBoundingClientRect();
+            this.mousePosition.x = e.touches[0].clientX - rect.left;
+            this.mousePosition.y = e.touches[0].clientY - rect.top;
             this.mouseMoved = true;
         });
 
