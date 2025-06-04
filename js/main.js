@@ -6,6 +6,21 @@ function updateCopyrightYear() {
     }
 }
 
+// API call function
+async function fetchData() {
+    try {
+        const response = await fetch('https://portfolio-backend-yq1y.onrender.com/');
+        // if (!response.ok) {
+        //     throw new Error('Network response was not ok');
+        // }
+        // const data = await response.json();
+        // Handle the data here
+        // console.log('API Response:', data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
 // Run immediately
 updateCopyrightYear();
 
@@ -207,6 +222,7 @@ contactForm.addEventListener('submit', async (e) => {
 document.addEventListener('DOMContentLoaded', () => {
     updateCopyrightYear();
     loadResponsiveImages();
+    fetchData(); // Call the API when page loads
 });
 
 // Particles.js configuration
