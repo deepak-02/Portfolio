@@ -4,6 +4,9 @@ class ParticleNetwork {
         this.ctx = canvas.getContext('2d');
         this.particles = [];
         this.numberOfParticles = 150;
+        if (window.innerWidth < 768) {
+            this.numberOfParticles = 60;
+        }
         this.minDistance = 120;
         this.mousePosition = { x: 0, y: 0 };
         this.mouseMoved = false;
