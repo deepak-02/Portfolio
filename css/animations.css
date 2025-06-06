@@ -62,26 +62,6 @@ section.visible {
     transform: translateY(0);
 }
 
-/* Hover Effects */
-.nav-links a {
-    position: relative;
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -5px;
-    left: 0;
-    background-color: var(--accent-color);
-    transition: width 0.3s ease;
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
 /* Custom Cursor Animation */
 .cursor {
     mix-blend-mode: difference;
@@ -303,54 +283,6 @@ section.visible {
 .btn:hover::before {
     width: 300%;
     height: 300%;
-}
-
-/* Navigation Link Hover Effects */
-.nav-links a {
-    position: relative;
-}
-
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--accent-color);
-    transition: width 0.3s ease;
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-/* Mobile Menu Animation */
-.hamburger span {
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-/* Scroll Progress Animation */
-.scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: var(--accent-color);
-    z-index: 1001;
-    transition: width 0.1s ease;
-}
-
-/* Custom Cursor Animation */
-.cursor {
-    transition: transform 0.1s ease, background-color 0.3s ease;
-}
-
-.cursor.hover {
-    transform: scale(1.5);
-    background-color: rgba(100, 255, 218, 0.1);
-    border-color: var(--accent-color);
 }
 
 /* Project Card Animations */

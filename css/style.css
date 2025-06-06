@@ -4,7 +4,6 @@
     --background-color: #0a192f;
     --text-color: #e6f1ff;
     --accent-color: #64ffda;
-    --nav-height: 80px;
     --h1-size: clamp(2rem, 5vw, 4rem);
     --h2-size: clamp(1.5rem, 4vw, 2.5rem);
     --h3-size: clamp(1.2rem, 3vw, 1.8rem);
@@ -48,47 +47,6 @@ body {
     z-index: 9999;
     transition: transform 0.2s ease;
     transform: translate(-50%, -50%);
-}
-
-/* Navigation */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: var(--nav-height);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 5%;
-    background: rgba(10, 25, 47, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    transition: all 0.3s ease;
-}
-
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--accent-color);
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-links a {
-    color: var(--text-color);
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-    position: relative;
-}
-
-.nav-links a:hover {
-    color: var(--accent-color);
 }
 
 /* Scroll Indicator */

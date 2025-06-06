@@ -27,33 +27,6 @@ updateCopyrightYear();
 // Also run when DOM is loaded to ensure it works
 document.addEventListener('DOMContentLoaded', updateCopyrightYear);
 
-// Mobile Navigation
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-const navLinksItems = document.querySelectorAll('.nav-links a');
-
-function toggleMenu() {
-    hamburger.classList.toggle('active');
-    navLinks.classList.toggle('active');
-    document.body.classList.toggle('no-scroll');
-}
-
-function closeMenu() {
-    hamburger.classList.remove('active');
-    navLinks.classList.remove('active');
-    document.body.classList.remove('no-scroll');
-}
-
-hamburger.addEventListener('click', toggleMenu);
-navLinksItems.forEach(item => item.addEventListener('click', closeMenu));
-
-// Close menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && !navLinks.contains(e.target) && navLinks.classList.contains('active')) {
-        closeMenu();
-    }
-});
-
 // Custom cursor with touch device detection
 const cursor = document.querySelector('.cursor');
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
