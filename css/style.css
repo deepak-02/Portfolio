@@ -315,7 +315,7 @@ body {
 
 .roles-container {
     height: 50px;
-    overflow: hidden;
+    overflow: visible;
     margin-bottom: 3rem;
     position: relative;
 }
@@ -2031,5 +2031,37 @@ body {
 @media screen and (max-width: 480px) {
     .container {
         padding: 0 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    section, .about, .skills, .projects-section, .contact, .footer {
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    .about-content, .about-intro-section, .about-details-section,
+    .skills-container, .skill-cards,
+    .projects-grid, .contact-content, .footer-content {
+        gap: 1.5rem !important;
+        margin-top: 25px !important;
+        margin-bottom: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    .project-card, .skill-card, .contact-form-wrapper, .contact-info-content {
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+    }
+    .cta-buttons {
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+    }
+    .about-item h3 {
+        margin-top: 2rem !important;
+    }
+    .games-section {
+        display: none !important;
     }
 } 
