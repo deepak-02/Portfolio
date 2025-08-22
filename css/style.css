@@ -1438,6 +1438,7 @@ body {
     background: rgba(100, 255, 218, 0.1);
     color: var(--accent-color);
     transform: translateY(-5px);
+    text-align: center;
 }
 
 .social-icon::before {
