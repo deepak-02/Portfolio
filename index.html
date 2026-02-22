@@ -1,359 +1,418 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deepak C K - Portfolio</title>
+    <title>Deepak C K — Backend Developer & Flutter Specialist</title>
+    <meta name="description"
+        content="Portfolio of Deepak C K — Backend Developer and Flutter App Specialist with 3+ years of experience building scalable applications.">
     <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-    <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <div class="cursor"></div>
-    <div id="three-background"></div>
-    
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursor-dot"></div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Background Blobs -->
+    <div class="bg-blobs" aria-hidden="true">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         NAVBAR
+    ═══════════════════════════════════════════════ -->
+    <header class="navbar" id="navbar">
+        <nav class="nav-inner">
+            <a href="#home" class="nav-logo" aria-label="Home">
+                <img src="./images/me-color.png" alt="Deepak C K" class="logo-avatar">
+                <span class="logo-text">Deepak C K</span>
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#games" class="nav-link">Games</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════
+         HERO
+    ═══════════════════════════════════════════════ -->
     <section id="home" class="hero">
-        <canvas id="particles-network"></canvas>
         <div class="hero-content">
-            <div class="name-container">
-                <h1 class="glitch-text">Deepak C K</h1>
-                <div class="name-bg"></div>
-            </div>
-            <div class="roles-container">
-                <div class="roles-wrapper">
-                    <span class="role-text active">Backend Developer & Flutter App Specialist | 2+ Years Experience</span>
-                </div>
-            </div>
-            <div class="cta-buttons">
-                <a href="#projects" class="btn primary">
-                    <span>
+            <div class="hero-text" data-reveal>
+                <p class="hero-greeting">👋 Hello, I'm</p>
+                <h1 class="hero-name">Deepak<br><span class="name-accent">C K</span></h1>
+                <p class="hero-role">Backend Developer &amp; Flutter App Specialist</p>
+                <p class="hero-xp"><span class="xp-badge">3+ Years Experience</span></p>
+                <p class="hero-tagline">Building scalable server-side applications &amp; cross-platform mobile apps.</p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">
                         View My Work
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M15.0378 6.34317L13.6269 7.76069L16.8972 11.0157L3.29211 11.0293L3.29413 13.0293L16.8619 13.0157L13.6467 16.2459L15.0643 17.6568L20.7079 11.9868L15.0378 6.34317Z" fill="currentColor"/>
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M15 6l6 6-6 6M3 12h17" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-                    </span>
-                </a>
-                <a href="#contact" class="btn secondary">
-                    <span>Contact Me</span>
-                </a>
+                    </a>
+                    <a href="#contact" class="btn btn-ghost">Contact Me</a>
+                </div>
+                <div class="hero-social">
+                    <a href="https://github.com/deepak-02" target="_blank" rel="noopener" aria-label="GitHub"><i
+                            class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/deepak-ck/" target="_blank" rel="noopener"
+                        aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="hero-visual" data-reveal data-delay="200">
+                <div class="code-window">
+                    <div class="code-window-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                        <span class="code-window-title">deepak.js</span>
+                    </div>
+                    <div class="code-window-body">
+                        <pre><code><span class="c-keyword">const</span> <span class="c-var">developer</span> = {
+  <span class="c-prop">name</span>:       <span class="c-str">"Deepak C K"</span>,
+  <span class="c-prop">role</span>:       <span class="c-str">"Backend + Flutter"</span>,
+  <span class="c-prop">experience</span>: <span class="c-str">"3+ years"</span>,
+
+  <span class="c-prop">stack</span>: [
+    <span class="c-str">"Node.js"</span>, <span class="c-str">"Express"</span>,
+    <span class="c-str">"Flutter"</span>, <span class="c-str">"MongoDB"</span>,
+    <span class="c-str">"Firebase"</span>, <span class="c-str">"PostgreSQL"</span>
+  ],
+
+  <span class="c-prop">passion</span>: <span class="c-str">"Clean &amp; scalable code"</span>,
+
+  <span class="c-fn">hire</span>()<span class="c-sym"> {</span>
+    <span class="c-keyword">return</span> <span class="c-str">"Let's build something great!"</span>
+  <span class="c-sym">}</span>
+}</code></pre>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-            <div class="arrow-scroll">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+        <a href="#about" class="scroll-down" aria-label="Scroll down">
+            <span class="scroll-down-label">Scroll</span>
+            <span class="scroll-down-arrow"></span>
+        </a>
     </section>
 
+    <!-- ═══════════════════════════════════════════════
+         ABOUT
+    ═══════════════════════════════════════════════ -->
     <section id="about" class="about">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-content">
-            <div class="about-intro-section">
-                <div class="about-text">
-                    <p class="reveal-text">Full-stack developer with 2+ years of expertise in building scalable server-side applications and cross-platform mobile apps.</p>
-                </div>
-                <div class="about-image">
-                    <div class="profile-image-container">
-                        <div class="profile-image-placeholder">
-                            <i class="fas fa-code"></i>
+        <div class="container">
+            <div class="section-header" data-reveal>
+                <p class="section-label">Who I Am</p>
+                <h2 class="section-title">About Me</h2>
+            </div>
+
+            <div class="about-grid">
+                <!-- Portrait -->
+                <div class="portrait-col" data-reveal>
+                    <div class="portrait-flip" title="Hover to reveal colour">
+                        <!-- Corner brackets stay outside the flip -->
+                        <div class="portrait-corner portrait-corner--tl"></div>
+                        <div class="portrait-corner portrait-corner--tr"></div>
+                        <div class="portrait-corner portrait-corner--bl"></div>
+                        <div class="portrait-corner portrait-corner--br"></div>
+
+                        <div class="portrait-flip-inner">
+                            <!-- Front: pencil sketch (default) -->
+                            <div class="portrait-face portrait-face--front">
+                                <img src="./images/me.png" alt="Deepak C K — sketch" class="portrait-img"
+                                    loading="eager">
+                                <div class="portrait-grain" aria-hidden="true"></div>
+                                <span class="portrait-hint">hover</span>
+                            </div>
+                            <!-- Back: colour version -->
+                            <div class="portrait-face portrait-face--back">
+                                <img src="./images/me-color.png" alt="Deepak C K"
+                                    class="portrait-img portrait-img--color" loading="lazy">
+                            </div>
                         </div>
-                        <div class="image-backdrop"></div>
+                    </div>
+                    <div class="portrait-caption">
+                        <span class="portrait-name">Deepak C K</span>
+                        <span class="portrait-title">Backend Dev · Flutter Specialist</span>
+                    </div>
+                </div>
+
+                <div class="about-text-col" data-reveal data-delay="100">
+                    <p class="about-lead">Full-stack developer with <strong>3+ years</strong> of expertise building
+                        scalable server-side applications and cross-platform mobile apps.</p>
+
+                    <div class="about-items">
+                        <div class="about-item">
+                            <div class="about-item-icon"><i class="fas fa-laptop-code"></i></div>
+                            <div>
+                                <h3>Core Expertise</h3>
+                                <p>Proficient in the Node.js ecosystem (Express.js, RESTful APIs) and Flutter
+                                    development. Strong background in database management (MongoDB, PostgreSQL) and
+                                    real-time features using Firebase.</p>
+                            </div>
+                        </div>
+                        <div class="about-item">
+                            <div class="about-item-icon"><i class="fas fa-cogs"></i></div>
+                            <div>
+                                <h3>Technical Skills</h3>
+                                <p>Experienced in implementing secure authentication systems, payment gateways
+                                    (Razorpay), and cloud services.</p>
+                            </div>
+                        </div>
+                        <div class="about-item">
+                            <div class="about-item-icon"><i class="fas fa-project-diagram"></i></div>
+                            <div>
+                                <h3>Project Highlights</h3>
+                                <p>Delivered complex solutions — QR-based attendance systems, rental management
+                                    platforms, and travel booking applications.</p>
+                            </div>
+                        </div>
+                        <div class="about-item">
+                            <div class="about-item-icon"><i class="fas fa-code-branch"></i></div>
+                            <div>
+                                <h3>Professional Approach</h3>
+                                <p>Passionate about clean code, performance optimization, and creating seamless user
+                                    experiences.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-stats-col" data-reveal data-delay="150">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-value">3+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-rocket"></i></div>
+                        <div class="stat-value">6+</div>
+                        <div class="stat-label">Projects Delivered</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="stat-value">1</div>
+                        <div class="stat-label">Published App</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
+                        <div class="stat-value">8+</div>
+                        <div class="stat-label">Technologies</div>
                     </div>
                 </div>
             </div>
 
-            <div class="about-details-section">
-                <div class="about-column">
-                    <div class="about-item">
-                        <h3><i class="fas fa-laptop-code"></i> Core Expertise</h3>
-                        <p>Proficient in Node.js ecosystem (Express.js, RESTful APIs) and Flutter development. Strong background in database management (MongoDB, PostgreSQL) and real-time features using Firebase.</p>
-                    </div>
-                    <div class="about-item">
-                        <h3><i class="fas fa-cogs"></i> Technical Skills</h3>
-                        <p>Experienced in implementing secure authentication systems, payment gateways (Razorpay), and cloud services.</p>
-                    </div>
-                </div>
-                <div class="about-column">
-                    <div class="about-item">
-                        <h3><i class="fas fa-project-diagram"></i> Project Highlights</h3>
-                        <p>Demonstrated success in delivering complex solutions including QR-based attendance systems, rental management platforms, and travel booking applications.</p>
-                    </div>
-                    <div class="about-item">
-                        <h3><i class="fas fa-code-branch"></i> Professional Approach</h3>
-                        <p>Passionate about clean code, performance optimization, and creating seamless user experiences.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tech-stack-section">
-                <h3>Technologies I Work With</h3>
+            <!-- Tech icons -->
+            <div class="tech-strip" data-reveal data-delay="300">
+                <h3 class="tech-strip-label">Technologies I Work With</h3>
                 <div class="tech-icons">
-                    <div class="tech-icon" data-tech="Node.js">
-                        <i class="fab fa-node-js"></i>
-                    </div>
-                    <div class="tech-icon" data-tech="JavaScript">
-                        <i class="fab fa-js"></i>
-                    </div>
-                    <div class="tech-icon" data-tech="MongoDB">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="tech-icon" data-tech="Flutter">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <div class="tech-icon" data-tech="Git">
-                        <i class="fab fa-github"></i>
-                    </div>
+                    <div class="tech-icon" data-tech="Node.js"><i class="fab fa-node-js"></i></div>
+                    <div class="tech-icon" data-tech="JavaScript"><i class="fab fa-js"></i></div>
+                    <div class="tech-icon" data-tech="MongoDB"><i class="fas fa-database"></i></div>
+                    <div class="tech-icon" data-tech="Flutter"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="tech-icon" data-tech="Git"><i class="fab fa-github"></i></div>
+                    <div class="tech-icon" data-tech="Firebase"><i class="fas fa-fire"></i></div>
+                    <div class="tech-icon" data-tech="Java"><i class="fab fa-java"></i></div>
+                    <div class="tech-icon" data-tech="Python"><i class="fab fa-python"></i></div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════════
+         SKILLS
+    ═══════════════════════════════════════════════ -->
     <section id="skills" class="skills">
-        <h2 class="section-title">My Skills</h2>
         <div class="container">
-            <div class="skills-container">
-                <div class="skill-group">
+            <div class="section-header" data-reveal>
+                <p class="section-label">What I Know</p>
+                <h2 class="section-title">My Skills</h2>
+            </div>
+
+            <div class="skills-grid">
+                <!-- Primary -->
+                <div class="skill-group" data-reveal>
                     <h3 class="skill-group-title">Primary Skills</h3>
-                    <div class="skill-cards">
-                        <div class="skill-card" data-skill="Node.js & Express.js">
-                            <div class="skill-card-inner">
-                                <div class="skill-card-front">
-                                    <i class="fab fa-node-js icon-nodejs"></i>
-                                    <h4>Node.js & Express.js</h4>
-                                </div>
-                                <div class="skill-card-back">
-                                    <span class="experience">2+ years</span>
-                                    <div class="skill-level">
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                    </div>
-                                    <p>Building scalable backend services and RESTful APIs</p>
-                                </div>
+                    <div class="skill-tags">
+                        <div class="skill-tag skill-tag--primary">
+                            <div class="skill-tag-icon"><i class="fab fa-node-js"></i></div>
+                            <div class="skill-tag-info">
+                                <span class="skill-tag-name">Node.js &amp; Express.js</span>
+                                <span class="skill-tag-xp">3+ years</span>
+                            </div>
+                            <div class="skill-dots">
+                                <span class="dot active"></span><span class="dot active"></span><span
+                                    class="dot active"></span><span class="dot active"></span><span
+                                    class="dot active"></span>
                             </div>
                         </div>
-
-                        <div class="skill-card" data-skill="Flutter">
-                            <div class="skill-card-inner">
-                                <div class="skill-card-front">
-                                    <svg class="flutter-icon" viewBox="0 0 256 317" xmlns="http://www.w3.org/2000/svg">
-                                        <defs>
-                                            <linearGradient id="flutter-gradient" x1="3.9517088%" y1="26.9930287%" x2="75.8970734%" y2="52.9192657%">
-                                                <stop stop-color="#44D1FD" offset="0%"/>
-                                                <stop stop-color="#3D83F6" offset="100%"/>
-                                            </linearGradient>
-                                        </defs>
-                                        <g fill="none" fill-rule="evenodd">
-                                            <path d="M157.666 0L0 157.667l48.8 48.8L255.267.001z" fill="url(#flutter-gradient)"/>
-                                            <path d="M156.567 145.397L72.15 229.815l48.984 49.716 48.7-48.7 85.617-85.617z" fill="url(#flutter-gradient)"/>
-                                            <path d="M121.133 279.531l37.082 37.082h97.052l-85.617-85.617z" fill="url(#flutter-gradient)" fill-opacity=".8"/>
-                                        </g>
-                                    </svg>
-                                    <h4>Flutter</h4>
-                                </div>
-                                <div class="skill-card-back">
-                                    <span class="experience">2+ years</span>
-                                    <div class="skill-level">
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot"></div>
-                                    </div>
-                                    <p>Cross-platform mobile app development</p>
-                                </div>
+                        <div class="skill-tag skill-tag--primary">
+                            <div class="skill-tag-icon flutter-icon-small">
+                                <svg viewBox="0 0 256 317" xmlns="http://www.w3.org/2000/svg" aria-label="Flutter">
+                                    <defs>
+                                        <linearGradient id="fl1" x1="3.95%" y1="26.99%" x2="75.9%" y2="52.92%">
+                                            <stop stop-color="#44D1FD" offset="0%" />
+                                            <stop stop-color="#3D83F6" offset="100%" />
+                                        </linearGradient>
+                                    </defs>
+                                    <g fill="none" fill-rule="evenodd">
+                                        <path d="M157.666 0L0 157.667l48.8 48.8L255.267.001z" fill="url(#fl1)" />
+                                        <path d="M156.567 145.397L72.15 229.815l48.984 49.716 48.7-48.7 85.617-85.617z"
+                                            fill="url(#fl1)" />
+                                        <path d="M121.133 279.531l37.082 37.082h97.052l-85.617-85.617z" fill="url(#fl1)"
+                                            fill-opacity=".8" />
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="skill-tag-info">
+                                <span class="skill-tag-name">Flutter</span>
+                                <span class="skill-tag-xp">3+ years</span>
+                            </div>
+                            <div class="skill-dots">
+                                <span class="dot active"></span><span class="dot active"></span><span
+                                    class="dot active"></span><span class="dot active"></span><span class="dot"></span>
                             </div>
                         </div>
-
-                        <div class="skill-card" data-skill="MongoDB">
-                            <div class="skill-card-inner">
-                                <div class="skill-card-front">
-                                    <img src="https://d2lgmzy8vjj79z.cloudfront.net/mongodb.svg" alt="MongoDB" class="mongodb-icon">
-                                    <h4>MongoDB</h4>
-                                </div>
-                                <div class="skill-card-back">
-                                    <span class="experience">2+ years</span>
-                                    <div class="skill-level">
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot"></div>
-                                    </div>
-                                    <p>NoSQL database design and optimization</p>
-                                </div>
+                        <div class="skill-tag skill-tag--primary">
+                            <div class="skill-tag-icon"><i class="fas fa-database"></i></div>
+                            <div class="skill-tag-info">
+                                <span class="skill-tag-name">MongoDB</span>
+                                <span class="skill-tag-xp">3+ years</span>
+                            </div>
+                            <div class="skill-dots">
+                                <span class="dot active"></span><span class="dot active"></span><span
+                                    class="dot active"></span><span class="dot active"></span><span class="dot"></span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="skill-group">
+                <!-- Secondary -->
+                <div class="skill-group" data-reveal data-delay="100">
                     <h3 class="skill-group-title">Secondary Skills</h3>
-                    <div class="skill-cards">
-                        <div class="skill-card" data-skill="Web Development">
-                            <div class="skill-card-inner">
-                                <div class="skill-card-front">
-                                    <div class="icon-container">
-                                        <i class="fab fa-html5 icon-html"></i>
-                                        <i class="fab fa-css3-alt icon-css"></i>
-                                        <i class="fab fa-js icon-js"></i>
-                                    </div>
-                                    <h4>HTML, CSS & JS</h4>
-                                </div>
-                                <div class="skill-card-back">
-                                    <span class="experience">Basic</span>
-                                    <div class="skill-level">
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot"></div>
-                                        <div class="level-dot"></div>
-                                    </div>
-                                    <p>Frontend web development fundamentals</p>
-                                </div>
+                    <div class="skill-tags">
+                        <div class="skill-tag skill-tag--secondary">
+                            <div class="skill-tag-icon icon-group">
+                                <i class="fab fa-html5"></i>
+                                <i class="fab fa-css3-alt"></i>
+                                <i class="fab fa-js"></i>
+                            </div>
+                            <div class="skill-tag-info">
+                                <span class="skill-tag-name">HTML, CSS &amp; JS</span>
+                                <span class="skill-tag-xp">Proficient</span>
+                            </div>
+                            <div class="skill-dots">
+                                <span class="dot active"></span><span class="dot active"></span><span
+                                    class="dot active"></span><span class="dot"></span><span class="dot"></span>
                             </div>
                         </div>
-
-                        <div class="skill-card" data-skill="Java">
-                            <div class="skill-card-inner">
-                                <div class="skill-card-front">
-                                    <i class="fab fa-java icon-java"></i>
-                                    <h4>Java</h4>
-                                </div>
-                                <div class="skill-card-back">
-                                    <span class="experience">1+ year</span>
-                                    <div class="skill-level">
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot"></div>
-                                        <div class="level-dot"></div>
-                                    </div>
-                                    <p>Core Java and enterprise applications</p>
-                                </div>
+                        <div class="skill-tag skill-tag--secondary">
+                            <div class="skill-tag-icon"><i class="fab fa-java"></i></div>
+                            <div class="skill-tag-info">
+                                <span class="skill-tag-name">Java</span>
+                                <span class="skill-tag-xp">1+ year</span>
+                            </div>
+                            <div class="skill-dots">
+                                <span class="dot active"></span><span class="dot active"></span><span
+                                    class="dot active"></span><span class="dot"></span><span class="dot"></span>
                             </div>
                         </div>
-
-                        <div class="skill-card" data-skill="Spring Boot">
-                            <div class="skill-card-inner">
-                                <div class="skill-card-front">
-                                    <img src="https://spring.io/img/projects/spring-boot.svg" alt="Spring Boot" class="spring-boot-icon">
-                                    <h4>Spring Boot</h4>
-                                </div>
-                                <div class="skill-card-back">
-                                    <span class="experience">&lt; 1 year</span>
-                                    <div class="skill-level">
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot"></div>
-                                        <div class="level-dot"></div>
-                                        <div class="level-dot"></div>
-                                    </div>
-                                    <p>Java-based microservices development</p>
-                                </div>
+                        <div class="skill-tag skill-tag--secondary">
+                            <div class="skill-tag-icon spring-icon">
+                                <img src="https://spring.io/img/projects/spring-boot.svg" alt="Spring Boot"
+                                    loading="lazy">
+                            </div>
+                            <div class="skill-tag-info">
+                                <span class="skill-tag-name">Spring Boot</span>
+                                <span class="skill-tag-xp">&lt; 1 year</span>
+                            </div>
+                            <div class="skill-dots">
+                                <span class="dot active"></span><span class="dot active"></span><span
+                                    class="dot"></span><span class="dot"></span><span class="dot"></span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="skill-group">
+                <!-- Other -->
+                <div class="skill-group" data-reveal data-delay="200">
                     <h3 class="skill-group-title">Other Skills</h3>
-                    <div class="skill-cards">
-                        <div class="skill-card" data-skill="Git">
-                            <div class="skill-card-inner">
-                                <div class="skill-card-front">
-                                    <i class="fab fa-git-alt icon-git"></i>
-                                    <h4>Git</h4>
-                                </div>
-                                <div class="skill-card-back">
-                                    <span class="experience">Basic</span>
-                                    <div class="skill-level">
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot"></div>
-                                        <div class="level-dot"></div>
-                                        <div class="level-dot"></div>
-                                    </div>
-                                    <p>Version control and collaboration</p>
-                                </div>
+                    <div class="skill-tags">
+                        <div class="skill-tag skill-tag--other">
+                            <div class="skill-tag-icon"><i class="fab fa-git-alt"></i></div>
+                            <div class="skill-tag-info">
+                                <span class="skill-tag-name">Git</span>
+                                <span class="skill-tag-xp">Version control</span>
+                            </div>
+                            <div class="skill-dots">
+                                <span class="dot active"></span><span class="dot active"></span><span
+                                    class="dot"></span><span class="dot"></span><span class="dot"></span>
                             </div>
                         </div>
-
-                        <div class="skill-card" data-skill="C/C++">
-                            <div class="skill-card-inner">
-                                <div class="skill-card-front">
-                                    <div class="icon-container">
-                                        <svg class="cpp-icon" viewBox="0 0 306 344" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M302.107 258.262c2.401-4.159 3.893-8.845 3.893-13.053V99.14c0-4.208-1.49-8.893-3.892-13.052L153 172.175l149.107 86.087z" fill="#00599C"/>
-                                            <path d="M166.25 341.193l126.5-73.034c3.644-2.104 6.956-5.737 9.357-9.897L153 172.175 3.893 258.263c2.401 4.159 5.714 7.793 9.357 9.896l126.5 73.034c7.287 4.208 19.213 4.208 26.5 0z" fill="#004482"/>
-                                            <path d="M302.108 86.087c-2.402-4.16-5.715-7.793-9.358-9.897L166.25 3.156c-7.287-4.208-19.213-4.208-26.5 0L13.25 76.19C5.962 80.397 0 90.725 0 99.14v146.069c0 4.208 1.491 8.894 3.893 13.053L153 172.175l149.108-86.088z" fill="#659AD2"/>
-                                            <path d="M153 274.175c-56.243 0-102-45.757-102-102s45.757-102 102-102c36.292 0 70.139 19.53 88.331 50.968l-44.143 25.544c-9.105-15.736-26.038-25.512-44.188-25.512-28.122 0-51 22.878-51 51 0 28.121 22.878 51 51 51 18.152 0 35.085-9.776 44.191-25.515l44.143 25.543c-18.192 31.441-52.04 50.972-88.334 50.972z" fill="#FFF"/>
-                                            <path d="M243 170.175h-12.5v-12.5H218v12.5h-12.5v12.5H218v12.5h12.5v-12.5H243v-12.5zM278 170.175h-12.5v-12.5H253v12.5h-12.5v12.5H253v12.5h12.5v-12.5H278v-12.5z" fill="#FFF"/>
-                                        </svg>
-                                    </div>
-                                    <h4>C/C++</h4>
-                                </div>
-                                <div class="skill-card-back">
-                                    <span class="experience">Basic</span>
-                                    <div class="skill-level">
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot"></div>
-                                        <div class="level-dot"></div>
-                                        <div class="level-dot"></div>
-                                    </div>
-                                    <p>Core programming concepts</p>
-                                </div>
+                        <div class="skill-tag skill-tag--other">
+                            <div class="skill-tag-icon">
+                                <svg viewBox="0 0 306 344" xmlns="http://www.w3.org/2000/svg" aria-label="C++"
+                                    style="width:1.4rem;height:1.4rem">
+                                    <path
+                                        d="M302.107 258.262c2.401-4.159 3.893-8.845 3.893-13.053V99.14c0-4.208-1.49-8.893-3.892-13.052L153 172.175l149.107 86.087z"
+                                        fill="#00599C" />
+                                    <path
+                                        d="M166.25 341.193l126.5-73.034c3.644-2.104 6.956-5.737 9.357-9.897L153 172.175 3.893 258.263c2.401 4.159 5.714 7.793 9.357 9.896l126.5 73.034c7.287 4.208 19.213 4.208 26.5 0z"
+                                        fill="#004482" />
+                                    <path
+                                        d="M302.108 86.087c-2.402-4.16-5.715-7.793-9.358-9.897L166.25 3.156c-7.287-4.208-19.213-4.208-26.5 0L13.25 76.19C5.962 80.397 0 90.725 0 99.14v146.069c0 4.208 1.491 8.894 3.893 13.053L153 172.175l149.108-86.088z"
+                                        fill="#659AD2" />
+                                    <path
+                                        d="M153 274.175c-56.243 0-102-45.757-102-102s45.757-102 102-102c36.292 0 70.139 19.53 88.331 50.968l-44.143 25.544c-9.105-15.736-26.038-25.512-44.188-25.512-28.122 0-51 22.878-51 51 0 28.121 22.878 51 51 51 18.152 0 35.085-9.776 44.191-25.515l44.143 25.543c-18.192 31.441-52.04 50.972-88.334 50.972z"
+                                        fill="#FFF" />
+                                    <path
+                                        d="M243 170.175h-12.5v-12.5H218v12.5h-12.5v12.5H218v12.5h12.5v-12.5H243v-12.5zM278 170.175h-12.5v-12.5H253v12.5h-12.5v12.5H253v12.5h12.5v-12.5H278v-12.5z"
+                                        fill="#FFF" />
+                                </svg>
+                            </div>
+                            <div class="skill-tag-info">
+                                <span class="skill-tag-name">C / C++</span>
+                                <span class="skill-tag-xp">Core concepts</span>
+                            </div>
+                            <div class="skill-dots">
+                                <span class="dot active"></span><span class="dot active"></span><span
+                                    class="dot"></span><span class="dot"></span><span class="dot"></span>
                             </div>
                         </div>
-
-                        <div class="skill-card" data-skill="Python">
-                            <div class="skill-card-inner">
-                                <div class="skill-card-front">
-                                    <div class="icon-container">
-                                        <svg class="python-icon" viewBox="0 0 256 255" xmlns="http://www.w3.org/2000/svg">
-                                            <defs>
-                                                <linearGradient id="python-blue" x1="12.959%" y1="12.039%" x2="79.639%" y2="78.201%">
-                                                    <stop stop-color="#387EB8" offset="0%"/>
-                                                    <stop stop-color="#366994" offset="100%"/>
-                                                </linearGradient>
-                                                <linearGradient id="python-yellow" x1="19.128%" y1="20.579%" x2="90.742%" y2="88.429%">
-                                                    <stop stop-color="#FFE052" offset="0%"/>
-                                                    <stop stop-color="#FFC331" offset="100%"/>
-                                                </linearGradient>
-                                            </defs>
-                                            <path d="M126.916.072c-64.832 0-60.784 28.115-60.784 28.115l.072 29.128h61.868v8.745H41.631S.145 61.355.145 126.77c0 65.417 36.21 63.097 36.21 63.097h21.61v-30.356s-1.165-36.21 35.632-36.21h61.362s34.475.557 34.475-33.319V33.97S194.67.072 126.916.072zM92.802 19.66a11.12 11.12 0 0111.13 11.13 11.12 11.12 0 01-11.13 11.13 11.12 11.12 0 01-11.13-11.13 11.12 11.12 0 0111.13-11.13z" fill="url(#python-blue)"/>
-                                            <path d="M128.757 254.126c64.832 0 60.784-28.115 60.784-28.115l-.072-29.127H127.6v-8.745h86.441s41.486 4.705 41.486-60.712c0-65.416-36.21-63.096-36.21-63.096h-21.61v30.355s1.165 36.21-35.632 36.21h-61.362s-34.475-.557-34.475 33.32v56.013s-5.235 33.897 62.518 33.897zm34.114-19.586a11.12 11.12 0 01-11.13-11.13 11.12 11.12 0 0111.13-11.131 11.12 11.12 0 0111.13 11.13 11.12 11.12 0 01-11.13 11.13z" fill="url(#python-yellow)"/>
-                                        </svg>
-                                        <svg class="django-icon" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M114.784 0h53.278v244.191c-27.29 5.162-47.38 7.193-69.117 7.193C33.873 251.384 0 222.664 0 166.318c0-53.69 36.414-88.862 92.931-88.862 8.797 0 15.482.687 23.613 2.754V0zm0 124.427c-6.295-1.89-11.566-2.574-18.213-2.574-27.29 0-43.015 16.78-43.015 46.174 0 28.639 14.975 44.307 42.565 44.307 5.974 0 10.932-.348 18.663-1.389v-86.518z" fill="#092E20"/>
-                                            <path d="M255.187 84.26v122.263c0 42.105-3.154 62.353-12.411 79.81-8.64 16.783-20.022 27.366-43.541 39.055l-49.438-23.297c23.519-10.93 34.901-20.588 42.015-35.327 7.47-15.087 9.855-32.62 9.855-78.445V84.261h53.52z" fill="#092E20"/>
-                                            <path d="M196.608 0h53.278v54.135h-53.278V0z" fill="#092E20"/>
-                                        </svg>
-                                    </div>
-                                    <h4>Python & Django</h4>
-                                </div>
-                                <div class="skill-card-back">
-                                    <span class="experience">Beginner</span>
-                                    <div class="skill-level">
-                                        <div class="level-dot active"></div>
-                                        <div class="level-dot"></div>
-                                        <div class="level-dot"></div>
-                                        <div class="level-dot"></div>
-                                        <div class="level-dot"></div>
-                                    </div>
-                                    <p>Learning web development with Django</p>
-                                </div>
+                        <div class="skill-tag skill-tag--other">
+                            <div class="skill-tag-icon"><i class="fab fa-python"></i></div>
+                            <div class="skill-tag-info">
+                                <span class="skill-tag-name">Python &amp; Django</span>
+                                <span class="skill-tag-xp">Beginner</span>
+                            </div>
+                            <div class="skill-dots">
+                                <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span
+                                    class="dot"></span><span class="dot"></span>
                             </div>
                         </div>
                     </div>
@@ -362,381 +421,297 @@
         </div>
     </section>
 
-    <section id="projects" class="projects-section">
+    <!-- ═══════════════════════════════════════════════
+         PROJECTS
+    ═══════════════════════════════════════════════ -->
+    <section id="projects" class="projects">
         <div class="container">
-            <h2 class="section-title">My Projects</h2>
-            <div class="projects-grid">
-                <!-- SafeRent -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-type">Published App</div>
+            <div class="section-header" data-reveal>
+                <p class="section-label">What I've Built</p>
+                <h2 class="section-title">My Projects</h2>
+            </div>
+
+            <div class="bento-grid">
+                <!-- SafeRent — large card -->
+                <div class="bento-card bento-card--featured" data-reveal>
+                    <div class="bento-card-badge">Published App</div>
+                    <div class="bento-card-visual">
+                        <img src="./images/saferent.png" alt="SafeRent" loading="lazy">
+                    </div>
+                    <div class="bento-card-content">
                         <h3>SafeRent</h3>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-image-container">
-                            <img src="./images/saferent.png" alt="SafeRent Project" loading="lazy">
+                        <p>A comprehensive rental management application for equipment dealers. Features inventory
+                            management and payment processing. Built with Flutter for cross-platform mobile experience
+                            and Spring Boot backend.</p>
+                        <div class="bento-tech">
+                            <span>Flutter</span><span>Spring
+                                Boot</span><span>PostgreSQL</span><span>Firebase</span><span>RESTful APIs</span>
                         </div>
-                        <p class="project-description">A comprehensive rental management application for equipment dealers. Features inventory management and payment processing. Built with Flutter for cross-platform mobile experience and Spring Boot backend.</p>
-                        <div class="project-tech-stack">
-                            <span>Flutter</span>
-                            <span>Spring Boot</span>
-                            <span>PostgreSQL</span>
-                            <span>Firebase</span>
-                            <span>RESTful APIs</span>
-                        </div>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://play.google.com/store/apps/details?id=com.saferent.mobile&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">View on Play Store →</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.saferent.mobile&pcampaignid=web_share"
+                            target="_blank" rel="noopener noreferrer" class="bento-link">
+                            View on Play Store <i class="fas fa-external-link-alt"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- PTF Attendance -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-type">Client Project</div>
+                <!-- PTF -->
+                <div class="bento-card" data-reveal data-delay="50">
+                    <div class="bento-card-badge">Client Project</div>
+                    <div class="bento-card-visual">
+                        <img src="./images/ptf.png" alt="PTF Attendance App" loading="lazy">
+                    </div>
+                    <div class="bento-card-content">
                         <h3>PTF Attendance App</h3>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-image-container">
-                            <img src="./images/ptf.png" alt="PTF Attendance App" loading="lazy">
+                        <p>Advanced attendance tracking with Vue.js dynamic QR codes, late marking, leave management
+                            with Firebase notifications, and an admin dashboard.</p>
+                        <div class="bento-tech">
+                            <span>Flutter</span><span>Vue.js</span><span>Express.js</span><span>MongoDB</span><span>Firebase</span>
                         </div>
-                        <p class="project-description">Advanced attendance tracking system featuring a Vue.js powered dynamic QR code display webpage. Includes late marking system, leave management with Firebase notifications, and admin dashboard.</p>
-                        <div class="project-tech-stack">
-                            <span>Flutter</span>
-                            <span>Vue.js</span>
-                            <span>Express.js</span>
-                            <span>MongoDB</span>
-                            <span>Firebase</span>
-                        </div>
-                    </div>
-                    <div class="project-links">
-                        <span class="private-tag">Private Project</span>
+                        <span class="bento-private"><i class="fas fa-lock"></i> Private Project</span>
                     </div>
                 </div>
 
                 <!-- Workluge -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-type">Company Project</div>
+                <div class="bento-card" data-reveal data-delay="100">
+                    <div class="bento-card-badge">Company Project</div>
+                    <div class="bento-card-visual">
+                        <img src="./images/workluge.png" alt="Workluge" loading="lazy">
+                    </div>
+                    <div class="bento-card-content">
                         <h3>Workluge</h3>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-image-container">
-                            <img src="./images/workluge.png" alt="Workluge Project" loading="lazy">
+                        <p>An innovative project management platform with integrated Jira functionalities. Built with
+                            Node.js and Express.js featuring high-performance MongoDB microservices.</p>
+                        <div class="bento-tech">
+                            <span>Node.js</span><span>Express.js</span><span>MongoDB</span><span>RESTful APIs</span>
                         </div>
-                        <p class="project-description">An innovative project management platform with integrated Jira functionalities. Built with Node.js and Express.js, featuring high-performance MongoDB microservices.</p>
-                        <div class="project-tech-stack">
-                            <span>Node.js</span>
-                            <span>Express.js</span>
-                            <span>MongoDB</span>
-                            <span>RESTful APIs</span>
-                        </div>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://workluge.com" target="_blank" rel="noopener noreferrer">View Project →</a>
+                        <a href="https://workluge.com" target="_blank" rel="noopener noreferrer" class="bento-link">
+                            View Project <i class="fas fa-external-link-alt"></i>
+                        </a>
                     </div>
                 </div>
 
                 <!-- AdLuge -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-type">Support & Development</div>
+                <div class="bento-card" data-reveal data-delay="150">
+                    <div class="bento-card-badge">Company Project</div>
+                    <div class="bento-card-visual">
+                        <img src="./images/adluge.png" alt="AdLuge CRM" loading="lazy">
+                    </div>
+                    <div class="bento-card-content">
                         <h3>AdLuge CRM</h3>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-image-container">
-                            <img src="./images/adluge.png" alt="AdLuge CRM Project" loading="lazy">
+                        <p>Contributed to AdLuge's agency management platform — client data, lead generation, and
+                            marketing automation. Worked on backend services using Node.js for CRM features and
+                            reporting tools.</p>
+                        <div class="bento-tech">
+                            <span>Node.js</span><span>Express.js</span><span>CRM</span><span>Marketing Automation</span>
                         </div>
-                        <p class="project-description">Contributed to AdLuge's agency management platform that helps companies manage client data, lead generation, and marketing automation. Worked on backend services using Node.js for CRM features and reporting tools.</p>
-                        <div class="project-tech-stack">
-                            <span>Node.js</span>
-                            <span>Express.js</span>
-                            <span>CRM</span>
-                            <span>Marketing Automation</span>
-                        </div>
+                        <a href="https://crm.adluge.com/" target="_blank" rel="noopener noreferrer" class="bento-link">
+                            View Project <i class="fas fa-external-link-alt"></i>
+                        </a>
                     </div>
-                    <div class="project-links">
-                        <a href="https://www.adluge.com" target="_blank" rel="noopener noreferrer">View Project →</a>
+                </div>
+
+                <!-- CallLuge -->
+                <div class="bento-card" data-reveal data-delay="200">
+                    <div class="bento-card-badge">Company Project</div>
+                    <div class="bento-card-visual">
+                        <img src="./images/callluge.svg" alt="CallLuge" loading="lazy">
+                    </div>
+                    <div class="bento-card-content">
+                        <h3>CallLuge</h3>
+                        <p>Premier call analytics platform for businesses — identifies quality leads and generates more
+                            revenue through in-depth call data. Worked on upgrade and maintenance of backend services,
+                            supporting Conversation Intelligence, Dynamic Number Insertion, and multi-channel call
+                            tracking.</p>
+                        <div class="bento-tech">
+                            <span>Python</span><span>Django</span><span>Call Analytics</span>
+                        </div>
+                        <a href="https://app.callluge.com/" target="_blank" rel="noopener noreferrer"
+                            class="bento-link">
+                            View Project <i class="fas fa-external-link-alt"></i>
+                        </a>
                     </div>
                 </div>
 
                 <!-- Dtrips -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-type">Client Project</div>
+                <div class="bento-card" data-reveal data-delay="250">
+                    <div class="bento-card-badge">Client Project</div>
+                    <div class="bento-card-visual">
+                        <img src="./images/dtrips.jpg" alt="Dtrips" loading="lazy">
+                    </div>
+                    <div class="bento-card-content">
                         <h3>Dtrips</h3>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-image-container">
-                            <img src="./images/dtrips.jpg" alt="Dtrips Project" loading="lazy">
+                        <p>A comprehensive travel booking application with mobile and web interfaces. Integrated
+                            Razorpay payment gateway and Firebase notifications. Features hotel and flight booking with
+                            real-time updates.</p>
+                        <div class="bento-tech">
+                            <span>Flutter</span><span>Vue.js</span><span>Spring Boot</span><span>Firebase</span>
                         </div>
-                        <p class="project-description">A comprehensive travel booking application with mobile and web interfaces. Integrated with Razorpay payment gateway and Firebase notifications. Features hotel and flight booking functionalities with real-time updates.</p>
-                        <div class="project-tech-stack">
-                            <span>Flutter</span>
-                            <span>Vue.js</span>
-                            <span>Spring Boot</span>
-                            <span>Firebase</span>
-                        </div>
-                    </div>
-                    <div class="project-links">
-                        <span class="private-tag">Private Project</span>
+                        <span class="bento-private"><i class="fas fa-lock"></i> Private Project</span>
                     </div>
                 </div>
 
                 <!-- Home Automation -->
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-type">Academic Project</div>
+                <div class="bento-card" data-reveal data-delay="250">
+                    <div class="bento-card-badge">Academic Project</div>
+                    <div class="bento-card-visual">
+                        <img src="./images/smart-home.jpg" alt="Home Automation System" loading="lazy">
+                    </div>
+                    <div class="bento-card-content">
                         <h3>Home Automation System</h3>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-image-container">
-                            <img src="./images/smart-home.jpg" alt="Home Automation System" loading="lazy">
+                        <p>IoT-based home automation using NodeMCU and MQTT protocol. Features remote device control and
+                            automated scheduling for smart home appliances.</p>
+                        <div class="bento-tech">
+                            <span>NodeMCU</span><span>MQTT</span><span>IoT</span><span>Embedded Systems</span>
                         </div>
-                        <p class="project-description">IoT-based home automation system using NodeMCU and MQTT protocol. Features remote device control and automated scheduling for smart home appliances.</p>
-                        <div class="project-tech-stack">
-                            <span>NodeMCU</span>
-                            <span>MQTT</span>
-                            <span>IoT</span>
-                            <span>Embedded Systems</span>
-                        </div>
-                    </div>
-                    <div class="project-links">
-                        <span class="academic-tag">Academic Project</span>
+                        <span class="bento-private"><i class="fas fa-graduation-cap"></i> Academic Project</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="games" class="games-section">
-        <div id="games-background"></div>
+    <!-- ═══════════════════════════════════════════════
+         GAMES
+    ═══════════════════════════════════════════════ -->
+    <section id="games" class="games">
         <div class="container">
-            <h2 class="section-title">Fun & Games</h2>
-            <div class="games-container">
-                <div class="game-card">
-                    <h3>Flappy Bird</h3>
+            <div class="section-header" data-reveal>
+                <p class="section-label">For Fun</p>
+                <h2 class="section-title">Fun &amp; Games</h2>
+            </div>
+            <div class="games-grid">
+                <div class="game-card" data-reveal>
+                    <div class="game-card-header">
+                        <h3><i class="fas fa-dove"></i> Flappy Bird</h3>
+                    </div>
                     <div id="flappy-bird-container" class="game-container"></div>
                     <p class="game-instructions">
-                        Use SPACE or CLICK to make the bird fly<br>
-                        Press B for power boost!
+                        <kbd>SPACE</kbd> or <kbd>CLICK</kbd> to fly &nbsp;·&nbsp; <kbd>B</kbd> for power boost
                     </p>
                 </div>
-                
-                <div class="game-card">
-                    <h3>Snake</h3>
+                <div class="game-card" data-reveal data-delay="100">
+                    <div class="game-card-header">
+                        <h3><i class="fas fa-gamepad"></i> Snake</h3>
+                    </div>
                     <div id="snake-container" class="game-container"></div>
                     <p class="game-instructions">
-                        Use Arrow Keys to control the snake<br>
-                        Press P to pause the game
+                        <kbd>↑ ↓ ← →</kbd> to move &nbsp;·&nbsp; <kbd>P</kbd> to pause
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════════
+         CONTACT
+    ═══════════════════════════════════════════════ -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-form-wrapper">
-                    <form id="contact-form" class="reveal-form">
+            <div class="section-header" data-reveal>
+                <p class="section-label">Let's Talk</p>
+                <h2 class="section-title">Get In Touch</h2>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-form-col" data-reveal>
+                    <form id="contact-form" class="contact-form" novalidate>
                         <div class="form-group">
-                            <input type="text" name="name" placeholder="Your Name" required>
+                            <label for="contact-name">Your Name</label>
+                            <input type="text" id="contact-name" name="name" placeholder="John Doe" required
+                                autocomplete="name">
+                            <span class="form-focus-line"></span>
                         </div>
                         <div class="form-group">
-                            <input type="email" name="email" placeholder="Your Email" required>
+                            <label for="contact-email">Your Email</label>
+                            <input type="email" id="contact-email" name="email" placeholder="john@example.com" required
+                                autocomplete="email">
+                            <span class="form-focus-line"></span>
                         </div>
                         <div class="form-group">
-                            <textarea name="message" placeholder="Your Message" required></textarea>
+                            <label for="contact-message">Message</label>
+                            <textarea id="contact-message" name="message" rows="5"
+                                placeholder="Tell me about your project..." required></textarea>
+                            <span class="form-focus-line"></span>
                         </div>
-                        <button type="submit" class="btn primary">Send Message</button>
+                        <button type="submit" class="btn btn-primary btn-full" id="submit-btn">
+                            <span class="btn-label">Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                        <div id="form-status" class="form-status" aria-live="polite"></div>
                     </form>
                 </div>
 
-                <div class="contact-info-wrapper">
-                    <div class="contact-info-item">
-                        <div class="icon-wrapper">
-                            <i class="fas fa-map-marker-alt"></i>
+                <div class="contact-info-col" data-reveal data-delay="150">
+                    <div class="contact-info-card">
+                        <div class="contact-info-item">
+                            <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="ci-text">
+                                <h4>Address</h4>
+                                <p>Choondasseril, Pollethai PO, Kalavoor, Alappuzha, 688522</p>
+                            </div>
                         </div>
-                        <div class="info-text">
-                            <h3>Address</h3>
-                            <p>Choondasseril, Pollethai PO, Kalavoor, Alappuzha, 688522</p>
+                        <div class="contact-info-item">
+                            <div class="ci-icon"><i class="fas fa-phone"></i></div>
+                            <div class="ci-text">
+                                <h4>Phone</h4>
+                                <p><a href="tel:+919072995017">+91 9072995017</a></p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="icon-wrapper">
-                            <i class="fas fa-phone"></i>
+                        <div class="contact-info-item">
+                            <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="ci-text">
+                                <h4>Email</h4>
+                                <p><a href="mailto:deepakck02@gmail.com">deepakck02@gmail.com</a></p>
+                            </div>
                         </div>
-                        <div class="info-text">
-                            <h3>Phone</h3>
-                            <p>+91 9072995017</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-info-item">
-                        <div class="icon-wrapper">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="info-text">
-                            <h3>Email</h3>
-                            <p>deepakck02@gmail.com</p>
-                        </div>
-                    </div>
-                    
 
-                    <div class="social-links">
-                        <a href="https://github.com/deepak-02" target="_blank" class="social-icon" data-tooltip="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/deepak-ck/" target="_blank" class="social-icon" data-tooltip="LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="https://www.instagram.com/_deepak_c_k/" target="_blank" class="social-icon" data-tooltip="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://www.facebook.com/deepak.ck.319" target="_blank" class="social-icon" data-tooltip="Facebook">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                        <!-- <a href="https://gitlab.com/deepak-02" target="_blank" class="social-icon" data-tooltip="GitLab">
-                            <i class="fab fa-gitlab"></i>
-                        </a> -->
-
-                        <!-- <a href="files/resume_1.pdf" download target="_blank" class="social-icon" data-tooltip="Download Resume">
-                            <i class="fa-solid fa-file-arrow-down"></i>
-                        </a>               -->
+                        <div class="contact-social">
+                            <a href="https://github.com/deepak-02" target="_blank" rel="noopener noreferrer"
+                                class="social-btn" aria-label="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/deepak-ck/" target="_blank" rel="noopener noreferrer"
+                                class="social-btn" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://www.instagram.com/_deepak_c_k/" target="_blank" rel="noopener noreferrer"
+                                class="social-btn" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.facebook.com/deepak.ck.319" target="_blank" rel="noopener noreferrer"
+                                class="social-btn" aria-label="Facebook">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════════ -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <p class="copyright">© <span id="copyright-year"></span> Deepak C K. All rights reserved.</p>
-            </div>
+            <p class="footer-copy">© <span id="copyright-year"></span> Deepak C K</p>
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/three-background.js"></script>
-    <script src="js/particles-network.js"></script>
+    <!-- Scripts — games kept, heavy libs removed -->
     <script src="js/snake.js"></script>
     <script src="js/games.js"></script>
-    <script src="js/games-background.js"></script>
+    <script src="js/main.js"></script>
+
     <script>
-        // Initialize the Flappy Bird game
-        document.addEventListener('DOMContentLoaded', function() {
-            // Clear any existing game instances
+        document.addEventListener('DOMContentLoaded', function () {
             const container = document.getElementById('flappy-bird-container');
-            container.innerHTML = '';
-            new FlappyBirdGame('flappy-bird-container');
+            if (container) {
+                container.innerHTML = '';
+                new FlappyBirdGame('flappy-bird-container');
+            }
         });
     </script>
-
-    <style>
-        .games-section {
-            padding: 80px 0;
-            background: rgba(10, 25, 47, 0.9);
-            color: #e6f1ff;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #games-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        .games-section .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        .games-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 40px;
-            position: relative;
-        }
-
-        .game-card {
-            background: rgba(17, 34, 64, 0.95);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(100, 255, 218, 0.1);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-        }
-
-        .game-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #64ffda, #00b4d8);
-            border-radius: 4px 4px 0 0;
-        }
-
-        .game-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-            border-color: rgba(100, 255, 218, 0.3);
-        }
-
-        .game-card h3 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #64ffda;
-            font-weight: 600;
-        }
-
-        .game-container {
-            width: 400px;
-            height: 600px;
-            position: relative;
-            margin: 0 auto;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(100, 255, 218, 0.1);
-        }
-
-        .game-instructions {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #8892b0;
-            line-height: 1.5;
-            padding: 15px;
-            background: rgba(100, 255, 218, 0.05);
-            border-radius: 8px;
-            border: 1px solid rgba(100, 255, 218, 0.1);
-        }
-
-        @media (max-width: 768px) {
-            .game-container {
-                width: 100%;
-                height: 500px;
-            }
-        }
-    </style>
 </body>
-</html> 
+
+</html>

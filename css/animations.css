@@ -1,356 +1,231 @@
-/* Glitch Effect */
-.glitch-text {
-    position: relative;
+/* ══════════════════════════════════════════════════════════
+   PORTFOLIO — ANIMATIONS.CSS
+   Smooth, performance-first animations
+   ══════════════════════════════════════════════════════════ */
+
+/* ─── SECTION REVEAL (via IntersectionObserver in JS) ────── */
+[data-reveal] {
     opacity: 0;
-    background: linear-gradient(120deg, #64ffda 0%, #1a90ff 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: revealText 1s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+    transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes revealText {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-        letter-spacing: 5px;
-    }
-    60% {
-        letter-spacing: 0px;
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-        letter-spacing: 0px;
-    }
-}
-
-/* Remove old effects */
-.glitch-text::before,
-.glitch-text::after {
-    display: none;
-}
-
-/* Typing Animation */
-.typing-text {
-    overflow: hidden;
-    border-right: 2px solid var(--accent-color);
-    white-space: nowrap;
-    animation: typing 3.5s steps(40, end),
-               blink-caret 0.75s step-end infinite;
-}
-
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-}
-
-@keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: var(--accent-color) }
-}
-
-/* Smooth Section Transitions */
-section {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.6s ease-out;
-}
-
-section.visible {
+[data-reveal].revealed {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Custom Cursor Animation */
-.cursor {
-    mix-blend-mode: difference;
+/* Stagger delays via data-delay attribute (set by JS) */
+[data-reveal][data-delay="50"] {
+    transition-delay: 50ms;
 }
 
-.cursor.hover {
-    transform: translate(-50%, -50%) scale(1.5);
-    background-color: var(--accent-color);
-    border: none;
+[data-reveal][data-delay="100"] {
+    transition-delay: 100ms;
 }
 
-/* Skill Bar Animation */
-.skill.animate .progress {
-    animation: fillBar 1.5s ease-in-out forwards;
+[data-reveal][data-delay="150"] {
+    transition-delay: 150ms;
 }
 
-@keyframes fillBar {
-    from { width: 0; }
-    to { width: var(--progress); }
+[data-reveal][data-delay="200"] {
+    transition-delay: 200ms;
 }
 
-/* Card Hover Effects */
-.game-card {
-    transition: all 0.3s ease;
+[data-reveal][data-delay="250"] {
+    transition-delay: 250ms;
 }
 
-.game-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+[data-reveal][data-delay="300"] {
+    transition-delay: 300ms;
 }
 
-/* Social Icons Animation */
-.social-icon {
-    transition: all 0.3s ease;
+[data-reveal][data-delay="400"] {
+    transition-delay: 400ms;
 }
 
-.social-icon:hover {
-    transform: translateY(-5px) scale(1.2);
+/* ─── HERO SEQUENCE ─────────────────────────────────────── */
+/* hero-text children stagger in automatically */
+.hero-greeting {
+    animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
 }
 
-/* Mobile Menu Animation */
-.hamburger {
-    cursor: pointer;
-    display: none;
+.hero-name {
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
 }
 
-.hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: var(--text-color);
-    margin: 5px 0;
-    transition: all 0.3s ease;
+.hero-role {
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
 }
 
-.hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(8px, 6px);
+.xp-badge {
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
 }
 
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
+.hero-tagline {
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.7s both;
 }
 
-.hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(7px, -6px);
+.hero-cta {
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both;
 }
 
-/* Fade In Animation */
-@keyframes fadeIn {
+.hero-social {
+    animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1s both;
+}
+
+.hero-visual {
+    animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+}
+
+.scroll-down {
+    animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 1.2s both;
+}
+
+@keyframes fadeUp {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(24px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-.fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
-}
-
-/* Button Hover Animation */
-.btn {
-    position: relative;
-    overflow: hidden;
-}
-
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.6s ease, height 0.6s ease;
-}
-
-.btn:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
-/* Scroll Progress Indicator */
-.scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: var(--accent-color);
-    z-index: 1001;
-    transition: width 0.1s ease;
-}
-
-/* Base Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideIn {
-    from { transform: translateX(-100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes scaleIn {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-/* Section Animations */
-section {
-    opacity: 0;
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Skill Bar Animation */
-.skill.animate .progress {
-    animation: progressBar 1.5s ease-in-out forwards;
-}
-
-@keyframes progressBar {
-    from { width: 0; }
-    to { width: var(--progress); }
-}
-
-/* Typing Text Animation */
-.typing-text::after {
+/* ─── CODE WINDOW CURSOR BLINK ──────────────────────────── */
+.code-window-body pre::after {
     content: '|';
-    animation: blink 1s infinite;
+    color: var(--accent);
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
 }
 
 @keyframes blink {
-    50% { opacity: 0; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
-/* Floating Animation */
-.floating-image {
-    animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-}
-
-/* Tech Stack Hover Effects */
-.tech-item {
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.tech-item:hover {
-    transform: translateY(-10px);
-    color: var(--accent-color);
-}
-
-/* Form Animations */
-.form-group input,
-.form-group textarea {
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.1);
-}
-
-/* Button Hover Effects */
-.btn {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* ─── NAV LINK ACTIVE INDICATOR ─────────────────────────── */
+.nav-link {
     position: relative;
-    overflow: hidden;
 }
 
-.btn::before {
+/* ─── SCROLL DOWN BOUNCE ────────────────────────────────── */
+/* already defined in style.css via @keyframes bounce */
+
+/* ─── STAT CARD COUNT-UP (CSS only pulse) ───────────────── */
+.stat-card:nth-child(1) {
+    animation: statFadeIn 0.6s ease 0.1s both;
+}
+
+.stat-card:nth-child(2) {
+    animation: statFadeIn 0.6s ease 0.2s both;
+}
+
+.stat-card:nth-child(3) {
+    animation: statFadeIn 0.6s ease 0.3s both;
+}
+
+.stat-card:nth-child(4) {
+    animation: statFadeIn 0.6s ease 0.4s both;
+}
+
+@keyframes statFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* only fire once stat column is revealed */
+.about-stats-col[data-reveal]:not(.revealed) .stat-card {
+    animation: none;
+    opacity: 0;
+}
+
+/* ─── BENTO CARD HOVER SHIMMER LINE ─────────────────────── */
+.bento-card::after {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.6s ease, height 0.6s ease;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.6), transparent);
+    transition: left 0.5s ease;
 }
 
-.btn:hover::before {
-    width: 300%;
-    height: 300%;
+.bento-card:hover::after {
+    left: 150%;
 }
 
-/* Project Card Animations */
-.project-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* ─── SKILL TAG SLIDE ────────────────────────────────────── */
+.skill-tag {
+    animation: none;
+    /* reset — fired by JS reveal */
 }
 
-.project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+/* ─── FORM SUBMIT BUTTON LOADING ────────────────────────── */
+#submit-btn.loading {
+    opacity: 0.75;
+    pointer-events: none;
 }
 
-/* Form Message Animations */
-.form-message {
-    animation: slideIn 0.3s ease forwards;
-    padding: 1rem;
-    margin-top: 1rem;
-    border-radius: 5px;
+#submit-btn.loading .btn-label::after {
+    content: '…';
 }
 
-.form-message.success {
-    background-color: rgba(76, 175, 80, 0.1);
-    color: #4CAF50;
+#submit-btn.loading i {
+    display: none;
 }
 
-.form-message.error {
-    background-color: rgba(244, 67, 54, 0.1);
-    color: #f44336;
+/* ─── GAME CARD GLOW ─────────────────────────────────────── */
+.game-card:hover {
+    box-shadow: 0 16px 50px rgba(124, 58, 237, 0.2);
 }
 
-/* Responsive Animation Adjustments */
-@media (max-width: 768px) {
-    .floating-image {
-        animation: float 4s ease-in-out infinite;
+/* ─── REDUCED MOTION SUPPORT ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 
-    .tech-item:hover {
-        transform: translateY(-5px);
+    [data-reveal] {
+        opacity: 1 !important;
+        transform: none !important;
     }
 
-    .project-card:hover {
-        transform: translateY(-5px);
-    }
-}
-
-/* Animation Optimization for Mobile */
-@media (max-width: 576px) {
-    section {
-        transition: opacity 0.4s ease;
+    .scroll-down {
+        animation: none;
     }
 
-    .btn::before {
-        display: none;
+    .blob {
+        animation: none;
     }
 }
 
-/* Prevent Animation During Resize */
+/* ─── RESIZE ANIMATION STOPPER ───────────────────────────── */
 .resize-animation-stopper * {
     animation: none !important;
     transition: none !important;
 }
-
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-} 

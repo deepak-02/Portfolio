@@ -1,117 +1,205 @@
-// Update copyright year
-function updateCopyrightYear() {
-    const yearSpan = document.getElementById('copyright-year');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-    }
+/* ══════════════════════════════════════════════════════════
+   PORTFOLIO — MAIN.JS
+   Handles: navbar, cursor, scroll reveal, scroll progress,
+            contact form, copyright year, resize stop
+   ══════════════════════════════════════════════════════════ */
+
+'use strict';
+
+// ─── UTILS ───────────────────────────────────────────────
+const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+
+// ─── COPYRIGHT YEAR ──────────────────────────────────────
+function initCopyrightYear() {
+    const el = $('#copyright-year');
+    if (el) el.textContent = new Date().getFullYear();
 }
+initCopyrightYear();
 
-// API call function
-async function fetchData() {
-    try {
-        const response = await fetch('https://portfolio-backend-yq1y.onrender.com/');
-        // if (!response.ok) {
-        //     throw new Error('Network response was not ok');
-        // }
-        // const data = await response.json();
-        // Handle the data here
-        // console.log('API Response:', data);
-    } catch (error) {
-        console.error('Error fetching data:', error);
+// ─── CUSTOM CURSOR (desktop only) ────────────────────────
+function initCursor() {
+    const cursor  = $('#cursor');
+    const dot     = $('#cursor-dot');
+    const isMobile = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
+    if (isMobile || !cursor) {
+        if (cursor) cursor.style.display = 'none';
+        if (dot)    dot.style.display    = 'none';
+        return;
     }
-}
 
-// Run immediately
-updateCopyrightYear();
-
-// Also run when DOM is loaded to ensure it works
-document.addEventListener('DOMContentLoaded', updateCopyrightYear);
-
-// Custom cursor with touch device detection
-const cursor = document.querySelector('.cursor');
-const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-if (!isTouchDevice) {
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
+    let mx = -100, my = -100;
+    document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.left = mx + 'px';
+        dot.style.top  = my + 'px';
     });
 
-    // Add hover class to cursor when hovering over interactive elements
-    document.querySelectorAll('a, button, .tech-item').forEach(element => {
-        element.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-        element.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    // Throttle cursor ring to rAF for smoothness
+    function trackCursor() {
+        cursor.style.left = mx + 'px';
+        cursor.style.top  = my + 'px';
+        requestAnimationFrame(trackCursor);
+    }
+    requestAnimationFrame(trackCursor);
+
+    // Hover state on interactive elements
+    $$('a, button, .skill-tag, .bento-card, .tech-icon').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
     });
-} else {
-    cursor.style.display = 'none';
 }
+initCursor();
 
-// Smooth section transitions with Intersection Observer
-const sections = document.querySelectorAll('section');
-const observerOptions = {
-    root: null,
-    threshold: 0.1,
-    rootMargin: '0px'
-};
+// ─── SCROLL PROGRESS BAR ─────────────────────────────────
+function initScrollProgress() {
+    const bar = $('#scroll-progress');
+    if (!bar) return;
+    window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+        bar.style.width = pct + '%';
+    }, { passive: true });
+}
+initScrollProgress();
 
-const sectionObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            if (entry.target.classList.contains('about')) {
-                animateSkills();
+// ─── NAVBAR ──────────────────────────────────────────────
+function initNavbar() {
+    const navbar   = $('#navbar');
+    const toggle   = $('#nav-toggle');
+    const navLinks = $('#nav-links');
+    const links    = $$('.nav-link');
+
+    // Scroll class
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+
+    // Mobile toggle
+    if (toggle && navLinks) {
+        toggle.addEventListener('click', () => {
+            const isOpen = toggle.classList.toggle('open');
+            navLinks.classList.toggle('open', isOpen);
+            toggle.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        // Close on link click (mobile)
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                toggle.classList.remove('open');
+                navLinks.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
+
+    // Active link on scroll
+    const sections = $$('section[id]');
+    function setActiveLink() {
+        let current = '';
+        sections.forEach(sec => {
+            const top = sec.getBoundingClientRect().top;
+            if (top <= 100) current = sec.id;
+        });
+        links.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+        });
+    }
+    window.addEventListener('scroll', setActiveLink, { passive: true });
+    setActiveLink();
+}
+initNavbar();
+
+// ─── SCROLL REVEAL ────────────────────────────────────────
+function initScrollReveal() {
+    const elements = $$('[data-reveal]');
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const delay = entry.target.dataset.delay;
+                if (delay) {
+                    entry.target.style.transitionDelay = delay + 'ms';
+                }
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
             }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    elements.forEach(el => observer.observe(el));
+
+    // Also trigger stat-card animations when about section is visible
+    const aboutSection = $('#about');
+    if (aboutSection) {
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        statsObserver.observe(aboutSection);
+    }
+}
+initScrollReveal();
+
+// ─── CONTACT FORM ─────────────────────────────────────────
+function initContactForm() {
+    const form      = $('#contact-form');
+    const statusEl  = $('#form-status');
+    const submitBtn = $('#submit-btn');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const data = {
+            name:    String(form.elements['name'].value).trim(),
+            email:   String(form.elements['email'].value).trim(),
+            message: String(form.elements['message'].value).trim(),
+        };
+
+        if (!data.name || !data.email || !data.message) return;
+
+        // Loading state
+        submitBtn.classList.add('loading');
+        statusEl.className = 'form-status';
+        statusEl.textContent = '';
+
+        try {
+            const res = await fetch('https://portfolio-backend-yq1y.onrender.com/api/contact/mail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            if (!res.ok) throw new Error('Server error');
+
+            showStatus('success', 'Message sent! I\'ll get back to you soon. 🎉');
+            form.reset();
+        } catch {
+            showStatus('error', 'Failed to send. Please email me directly at deepakck02@gmail.com');
+        } finally {
+            submitBtn.classList.remove('loading');
         }
     });
-}, observerOptions);
 
-sections.forEach(section => {
-    sectionObserver.observe(section);
-});
-
-// Animate skill bars with intersection observer
-function animateSkills() {
-    const skills = document.querySelectorAll('.skill');
-    skills.forEach(skill => {
-        const progress = skill.querySelector('.progress');
-        const progressValue = progress.getAttribute('style').match(/width:\s*(\d+)%/)[1];
-        progress.style.width = '0';
-        // Small delay to ensure the width reset is registered
+    function showStatus(type, msg) {
+        statusEl.className = 'form-status ' + type;
+        statusEl.textContent = msg;
         setTimeout(() => {
-            progress.style.width = progressValue + '%';
-        }, 50);
-    });
+            statusEl.className = 'form-status';
+            statusEl.textContent = '';
+        }, 6000);
+    }
 }
+initContactForm();
 
-// Skill section observer
-const skillSection = document.querySelector('#skills');
-const skillObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateSkills();
-            // Unobserve after first animation
-            skillObserver.unobserve(entry.target);
-        }
-    });
-}, {
-    threshold: 0.2
-});
-
-skillObserver.observe(skillSection);
-
-// Responsive image loading
-function loadResponsiveImages() {
-    const images = document.querySelectorAll('img[data-src]');
-    images.forEach(img => {
-        const src = img.getAttribute('data-src');
-        if (src) {
-            img.src = src;
-            img.removeAttribute('data-src');
-        }
-    });
-}
-
-// Handle window resize events
+// ─── RESIZE ANIMATION STOPPER ────────────────────────────
 let resizeTimer;
 window.addEventListener('resize', () => {
     document.body.classList.add('resize-animation-stopper');
@@ -121,139 +209,6 @@ window.addEventListener('resize', () => {
     }, 400);
 });
 
-// Scroll progress indicator
-const scrollProgress = document.createElement('div');
-scrollProgress.className = 'scroll-progress';
-document.body.appendChild(scrollProgress);
-
-window.addEventListener('scroll', () => {
-    if (window.innerWidth > 768) {  // Only show on larger screens
-        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (window.scrollY / windowHeight) * 100;
-        scrollProgress.style.width = scrolled + '%';
-    }
-});
-
-// Form handling with validation and responsive feedback
-const contactForm = document.getElementById('contact-form');
-contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData(contactForm);
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-    
-    try {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Sending...';
-        
-        // Prepare the data for the API call
-        const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            message: formData.get('message')
-        };
-
-        // Make the API call
-        const response = await fetch('https://portfolio-backend-yq1y.onrender.com/api/contact/mail', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to send message');
-        }
-
-        // Show success message
-        const successMessage = document.createElement('div');
-        successMessage.className = 'form-message success';
-        successMessage.textContent = 'Thank you for your message! I will get back to you soon.';
-        contactForm.appendChild(successMessage);
-        
-        // Reset the form
-        contactForm.reset();
-        
-        setTimeout(() => successMessage.remove(), 5000);
-    } catch (error) {
-        console.error('Error submitting form:', error);
-        
-        // Show error message
-        const errorMessage = document.createElement('div');
-        errorMessage.className = 'form-message error';
-        errorMessage.textContent = 'There was an error sending your message. Please try again.';
-        contactForm.appendChild(errorMessage);
-        
-        setTimeout(() => errorMessage.remove(), 5000);
-    } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Send Message';
-    }
-});
-
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    updateCopyrightYear();
-    loadResponsiveImages();
-    fetchData(); // Call the API when page loads
-});
-
-// Particles.js configuration
-if (typeof particlesJS !== 'undefined') {
-    particlesJS('particles-network', {
-        particles: {
-            number: {
-                value: 80,
-                density: {
-                    enable: true,
-                    value_area: 800
-                }
-            },
-            color: {
-                value: '#64ffda'
-            },
-            shape: {
-                type: 'circle'
-            },
-            opacity: {
-                value: 0.5,
-                random: false
-            },
-            size: {
-                value: 3,
-                random: true
-            },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: '#64ffda',
-                opacity: 0.4,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 6,
-                direction: 'none',
-                random: false,
-                straight: false,
-                out_mode: 'out',
-                bounce: false
-            }
-        },
-        interactivity: {
-            detect_on: 'canvas',
-            events: {
-                onhover: {
-                    enable: true,
-                    mode: 'repulse'
-                },
-                onclick: {
-                    enable: true,
-                    mode: 'push'
-                },
-                resize: true
-            }
-        },
-        retina_detect: true
-    });
-}
+// ─── BACKEND PING (keep-alive) ───────────────────────────
+// Fire-and-forget: wakes up render backend
+fetch('https://portfolio-backend-yq1y.onrender.com/').catch(() => {});
