@@ -202,13 +202,20 @@ function initContactForm() {
 initContactForm();
 
 // ─── RESIZE ANIMATION STOPPER ────────────────────────────
+// Only trigger on WIDTH changes — mobile browser chrome toggling
+// changes height on every scroll and was re-triggering all animations
 let resizeTimer;
+let lastWidth = window.innerWidth;
 window.addEventListener('resize', () => {
-    document.body.classList.add('resize-animation-stopper');
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-        document.body.classList.remove('resize-animation-stopper');
-    }, 400);
+    const newWidth = window.innerWidth;
+    if (newWidth !== lastWidth) {
+        lastWidth = newWidth;
+        document.body.classList.add('resize-animation-stopper');
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            document.body.classList.remove('resize-animation-stopper');
+        }, 400);
+    }
 });
 
 // ─── BACKEND PING (keep-alive) ───────────────────────────
