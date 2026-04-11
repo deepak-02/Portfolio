@@ -220,6 +220,35 @@ class SnakeGame {
                     break;
             }
         });
+
+        // Touch swipe controls
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        this.canvas.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, {passive: true});
+
+        this.canvas.addEventListener('touchend', (e) => {
+            if (!this.gameStarted || this.gameOver) return;
+            let touchEndX = e.changedTouches[0].screenX;
+            let touchEndY = e.changedTouches[0].screenY;
+            
+            let dx = touchEndX - touchStartX;
+            let dy = touchEndY - touchStartY;
+            const threshold = 30;
+            
+            if (Math.abs(dx) > Math.abs(dy)) {
+                // Horizontal swipe
+                if (dx > threshold && this.direction !== 'left') this.nextDirection = 'right';
+                else if (dx < -threshold && this.direction !== 'right') this.nextDirection = 'left';
+            } else {
+                // Vertical swipe
+                if (dy > threshold && this.direction !== 'up') this.nextDirection = 'down';
+                else if (dy < -threshold && this.direction !== 'down') this.nextDirection = 'up';
+            }
+        }, {passive: true});
     }
 
     startGame() {

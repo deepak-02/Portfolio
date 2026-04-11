@@ -81,6 +81,7 @@ function initNavbar() {
         toggle.addEventListener('click', () => {
             const isOpen = toggle.classList.toggle('open');
             navLinks.classList.toggle('open', isOpen);
+            navbar.classList.toggle('menu-open', isOpen);
             toggle.setAttribute('aria-expanded', String(isOpen));
         });
 
@@ -89,6 +90,7 @@ function initNavbar() {
             link.addEventListener('click', () => {
                 toggle.classList.remove('open');
                 navLinks.classList.remove('open');
+                navbar.classList.remove('menu-open');
                 toggle.setAttribute('aria-expanded', 'false');
             });
         });

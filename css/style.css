@@ -41,6 +41,8 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;        /* prevent pull-to-refresh on mobile */
+    -webkit-overflow-scrolling: touch; /* smooth momentum scroll on iOS */
 }
 
 a {
@@ -188,6 +190,13 @@ ul {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 1px 0 var(--border);
+}
+
+.navbar.menu-open {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
 
 .nav-inner {
@@ -343,6 +352,25 @@ ul {
 .btn-full {
     width: 100%;
     justify-content: center;
+}
+
+/* Loading state for submit button */
+.btn.loading {
+    opacity: 0.7;
+    pointer-events: none;
+    position: relative;
+}
+
+.btn.loading .btn-label::after {
+    content: '...';
+    animation: ellipsis 1.2s steps(3, end) infinite;
+}
+
+@keyframes ellipsis {
+    0%   { content: '.'; }
+    33%  { content: '..'; }
+    66%  { content: '...'; }
+    100% { content: '.'; }
 }
 
 /* ─── SECTION COMMON ────────────────────────────────────── */
@@ -930,6 +958,11 @@ section {
     position: relative;
 }
 
+.tech-icon i[class*='devicon'] {
+    font-size: 2rem;
+    transition: transform var(--transition);
+}
+
 .tech-icon:hover {
     color: var(--accent);
     transform: translateY(-5px);
@@ -1034,49 +1067,46 @@ section {
     color: var(--accent);
 }
 
-.flutter-icon-small {
-    padding: 6px;
-}
-
-.flutter-icon-small svg {
-    width: 100%;
-    height: 100%;
-}
-
-.spring-icon img {
-    width: 26px;
-    height: 26px;
-    object-fit: contain;
+.skill-tag-icon i[class*='devicon'] {
+    font-size: 1.5rem;
 }
 
 .icon-group {
-    gap: 2px;
+    gap: 4px;
     font-size: 1rem;
+    width: auto;
+    min-width: 42px;
+    padding: 0 6px;
 }
 
-.icon-group .fa-html5 {
-    color: #e34f26;
+.icon-group i[class*='devicon'],
+.icon-group i[class*='fa'] {
+    font-size: 1.1rem;
 }
 
-.icon-group .fa-css3-alt {
-    color: #264de4;
-}
+i.fa-html5 { color: #E34F26 !important; }
+i.fa-css3-alt { color: #264DE4 !important; }
+i.fa-js { color: #F7DF1E !important; }
+i.fa-react { color: #61DAFB !important; }
+i.fa-vuejs { color: #42B883 !important; }
+i.fa-figma { color: #F24E1E !important; }
+i.fa-android { color: #3DDC84 !important; }
+i.fa-python { color: #3776AB !important; }
+i.fa-fire { color: #FFCA28 !important; }
+i.fa-node-js { color: #68A063 !important; }
+i.fa-java { color: #F89820 !important; }
+i.fa-git-alt { color: #F05032 !important; }
 
-.icon-group .fa-js {
-    color: #f7df1e;
-}
-
-.fab.fa-node-js {
-    color: #68a063;
-}
-
-.fab.fa-java {
-    color: #f89820;
-}
-
-.fab.fa-git-alt {
-    color: #f05032;
-}
+/* Custom utility colors for non-native FontAwesome 5 skills */
+i.icon-ts { color: #3178C6 !important; }
+i.icon-n8n { color: #EA4B71 !important; }
+i.icon-swagger { color: #85EA2D !important; }
+i.icon-postman { color: #FF6C37 !important; }
+i.icon-clean { color: #FFFFFF !important; }
+i.icon-redis { color: #DC382D !important; }
+i.icon-postgres { color: #336791 !important; }
+i.icon-mongo { color: #47A248 !important; }
+i.icon-socket { color: #FFFFFF !important; }
 
 .skill-tag-info {
     flex: 1;
@@ -1095,39 +1125,6 @@ section {
     color: var(--text-muted);
     margin-top: 0.15rem;
     font-family: 'Fira Code', monospace;
-}
-
-.skill-dots {
-    display: flex;
-    gap: 5px;
-    flex-shrink: 0;
-}
-
-.skill-dots .dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1.5px solid rgba(255, 255, 255, 0.12);
-    transition: background var(--transition), border-color var(--transition);
-}
-
-.skill-dots .dot.active {
-    background: var(--primary);
-    border-color: var(--primary);
-    box-shadow: 0 0 6px rgba(124, 58, 237, 0.5);
-}
-
-.skill-tag--secondary .skill-dots .dot.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    box-shadow: 0 0 6px rgba(34, 211, 238, 0.4);
-}
-
-.skill-tag--other .skill-dots .dot.active {
-    background: #ec4899;
-    border-color: #ec4899;
-    box-shadow: 0 0 6px rgba(236, 72, 153, 0.4);
 }
 
 /* ─── PROJECTS ──────────────────────────────────────────── */
@@ -1399,6 +1396,14 @@ section {
     border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--border);
+}
+
+.game-container canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .game-instructions {
@@ -1683,10 +1688,18 @@ kbd {
         padding: 5rem 0;
     }
 
+    #games,
+    #nav-item-games {
+        display: none !important;
+    }
+
     .nav-links {
         display: none;
         position: fixed;
-        inset: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
         background: rgba(13, 13, 20, 0.97);
         backdrop-filter: blur(20px);
         flex-direction: column;

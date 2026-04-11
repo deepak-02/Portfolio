@@ -326,6 +326,11 @@ class FlappyBirdGame {
     setupEventListeners() {
         this.canvas.addEventListener('click', () => this.jump());
         
+        // Touch support
+        this.canvas.addEventListener('touchstart', (e) => {
+            this.jump();
+        }, {passive: true});
+        
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space') {
                 // Only prevent default if the game is active
