@@ -1685,6 +1685,7 @@ kbd {
         line-height: 1.7;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        text-align: left;
     }
 
     .tech-icons {
@@ -1764,7 +1765,7 @@ kbd {
 
 @media (max-width: 480px) {
     .hero {
-        padding: var(--nav-h) 1rem 2rem;
+        padding: var(--nav-h) 1rem 6rem;
     }
 
     .hero-name {
