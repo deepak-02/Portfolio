@@ -1,688 +1,627 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deepak C K — Backend Developer & Flutter Specialist</title>
-    <meta name="description"
-        content="Portfolio of Deepak C K — Backend Developer and Flutter App Specialist with 3+ years of experience building scalable applications.">
-    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deepak C K — Full-Stack Developer</title>
+  <meta name="description" content="Deepak C K — Full-stack developer with 3+ years of experience building scalable applications across mobile and backend systems with Flutter and Node.js.">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)">
+  <meta property="og:title" content="Deepak C K — Full-Stack Developer">
+  <meta property="og:description" content="Building end-to-end scalable applications across mobile and backend systems.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/deepak.jpg">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+
+  <script>
+    /* Theme + loading state before paint (prevents flash) */
+    (function () {
+      var d = document.documentElement, t = 'dark';
+      try { t = localStorage.getItem('dck-theme') || 'dark'; } catch (e) {}
+      d.setAttribute('data-theme', t);
+      /* "lite" mode: tiny screens (smartwatches, keypad phones), old browsers, data-saver.
+         Static, fast, fully readable — no loader, smooth scroll or heavy animation. */
+      var c = navigator.connection || {};
+      var old = !('IntersectionObserver' in window) || !window.CSS || !CSS.supports || !CSS.supports('display', 'grid');
+      var lite = old || Math.min(screen.width, window.innerWidth || 9999) < 300 || c.saveData === true;
+      window.__LITE__ = lite;
+      if (lite) d.className += ' lite';
+      else if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.className += ' is-loading';
+      setTimeout(function () { d.classList.remove('is-loading'); }, 5000); /* safety net if scripts fail */
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-dot" id="cursor-dot"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Scroll Progress -->
-    <div class="scroll-progress" id="scroll-progress"></div>
-
-    <!-- Background Blobs -->
-    <div class="bg-blobs" aria-hidden="true">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+  <!-- Preloader -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__hud">
+      <svg class="hud" viewBox="0 0 240 240">
+        <circle class="hud__ticks" cx="120" cy="120" r="114" />
+        <circle class="hud__arcs" cx="120" cy="120" r="100" />
+        <circle class="hud__track" cx="120" cy="120" r="86" />
+        <circle class="hud__progress" cx="120" cy="120" r="86" />
+        <circle class="hud__inner" cx="120" cy="120" r="70" />
+        <g class="hud__cross">
+          <path d="M120 0v18M120 222v18M0 120h18M222 120h18" />
+        </g>
+      </svg>
+      <div class="hud__core">
+        <span class="hud__mark">D</span>
+        <span class="hud__pct"><span class="js-hud-count">00</span></span>
+      </div>
+      <p class="hud__status"><span class="js-status">Initialising</span><span class="hud__caret"></span></p>
     </div>
+    <div class="loader__inner">
+      <span class="loader__name">Deepak C K</span>
+      <span class="loader__count"><span class="js-count">0</span>%</span>
+    </div>
+    <div class="loader__bar"><span></span></div>
+  </div>
 
-    <!-- ═══════════════════════════════════════════════
-         NAVBAR
-    ═══════════════════════════════════════════════ -->
-    <header class="navbar" id="navbar">
-        <nav class="nav-inner">
-            <a href="#home" class="nav-logo" aria-label="Home">
-                <img src="./images/me-color.png" alt="Deepak C K" class="logo-avatar">
-                <span class="logo-text">Deepak C K</span>
+  <canvas class="loader-fx" aria-hidden="true"></canvas>
+
+  <!-- Cursor -->
+  <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+
+  <!-- Scroll progress -->
+  <div class="progress" aria-hidden="true"><span></span></div>
+
+  <!-- Header -->
+  <header class="nav" id="top">
+    <div class="nav__inner">
+      <a href="#home" class="nav__logo" aria-label="Deepak C K — home" data-magnetic>
+        <span class="nav__mark">D</span><span class="nav__logo-text">Deepak C K</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+        <span class="nav__pill" aria-hidden="true"></span>
+      </nav>
+
+      <div class="nav__actions">
+        <button class="theme-toggle" type="button" aria-label="Switch to light mode" data-magnetic>
+          <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="#contact" class="btn btn--small nav__cta" data-magnetic>Let's talk</a>
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <nav aria-label="Mobile">
+      <a href="#about"><span>01</span>About</a>
+      <a href="#experience"><span>02</span>Experience</a>
+      <a href="#skills"><span>03</span>Skills</a>
+      <a href="#work"><span>04</span>Work</a>
+      <a href="#contact"><span>05</span>Contact</a>
+    </nav>
+    <div class="mobile-menu__foot">
+      <a href="mailto:deepakck02@gmail.com">deepakck02@gmail.com</a>
+      <a href="tel:+919072995017">+91 90729 95017</a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="home">
+      <canvas class="hero__field" aria-hidden="true"></canvas>
+      <div class="hero__glow" aria-hidden="true"></div>
+
+      <div class="container hero__content">
+        <p class="eyebrow hero__eyebrow js-hero-fade">
+          <span class="dot" aria-hidden="true"></span> Full-Stack Developer · 3+ Years Experience
+        </p>
+
+        <h1 class="hero__title" aria-label="Deepak C K">
+          <span class="hero__name js-split-chars">Deepak C K</span>
+        </h1>
+
+        <div class="hero__bottom">
+          <p class="hero__lead js-hero-fade">
+            Building end-to-end <em>scalable</em> applications across mobile and backend systems — with Flutter and Node.js.
+          </p>
+          <div class="hero__ctas js-hero-fade">
+            <a href="#work" class="btn btn--primary" data-magnetic>
+              <span>View my work</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li id="nav-item-games"><a href="#games" class="nav-link">Games</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </nav>
-    </header>
-
-    <!-- ═══════════════════════════════════════════════
-         HERO
-    ═══════════════════════════════════════════════ -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <div class="hero-text" data-reveal>
-                <p class="hero-greeting">👋 Hello, I'm</p>
-                <h1 class="hero-name">Deepak<br><span class="name-accent">C K</span></h1>
-                <p class="hero-role">Full-Stack Developer</p>
-                <p class="hero-xp"><span class="xp-badge">3+ Years Experience</span></p>
-                <p class="hero-tagline">Building end-to-end scalable applications across mobile and backend systems.</p>
-                <div class="hero-cta">
-                    <a href="#projects" class="btn btn-primary">
-                        View My Work
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M15 6l6 6-6 6M3 12h17" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                    <a href="#contact" class="btn btn-ghost">Contact Me</a>
-                </div>
-                <div class="hero-social">
-                    <a href="https://github.com/deepak-02" target="_blank" rel="noopener" aria-label="GitHub"><i
-                            class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/deepak-ck/" target="_blank" rel="noopener"
-                        aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-            <div class="hero-visual" data-reveal data-delay="200">
-                <div class="code-window">
-                    <div class="code-window-header">
-                        <span class="dot red"></span>
-                        <span class="dot yellow"></span>
-                        <span class="dot green"></span>
-                        <span class="code-window-title">deepak.js</span>
-                    </div>
-                    <div class="code-window-body">
-                        <pre><code><span class="c-keyword">const</span> <span class="c-var">developer</span> = {
-  <span class="c-prop">name</span>:       <span class="c-str">"Deepak C K"</span>,
-  <span class="c-prop">role</span>:       <span class="c-str">"Full-Stack Developer"</span>,
-  <span class="c-prop">experience</span>: <span class="c-str">"3+ years"</span>,
-
-  <span class="c-prop">stack</span>: [
-    <span class="c-str">"Node.js"</span>, <span class="c-str">"Express"</span>,
-    <span class="c-str">"Flutter"</span>, <span class="c-str">"MongoDB"</span>,
-    <span class="c-str">"Firebase"</span>, <span class="c-str">"PostgreSQL"</span>,
-    <span class="c-str">"TypeScript"</span>, <span class="c-str">"Redis"</span>
-  ],
-
-  <span class="c-prop">passion</span>: <span class="c-str">"Clean &amp; scalable code"</span>,
-
-  <span class="c-fn">hire</span>()<span class="c-sym"> {</span>
-    <span class="c-keyword">return</span> <span class="c-str">"Let's build something great!"</span>
-  <span class="c-sym">}</span>
-}</code></pre>
-                    </div>
-                </div>
-            </div>
+            <a href="#contact" class="btn btn--ghost" data-magnetic><span>Contact me</span></a>
+          </div>
         </div>
-        <a href="#about" class="scroll-down" aria-label="Scroll down">
-            <span class="scroll-down-label">Scroll</span>
-            <span class="scroll-down-arrow"></span>
+      </div>
+
+      <div class="hero__meta container js-hero-fade">
+        <span>Alappuzha, Kerala — India</span>
+        <a href="#about" class="hero__scroll" aria-label="Scroll to About">
+          <span class="hero__scroll-line" aria-hidden="true"></span> Scroll
         </a>
+        <span class="hero__clock">IST <span class="js-clock">--:--</span></span>
+      </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-         ABOUT
-    ═══════════════════════════════════════════════ -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-header" data-reveal>
-                <p class="section-label">Who I Am</p>
-                <h2 class="section-title">About Me</h2>
-            </div>
-
-            <div class="about-grid">
-                <!-- Portrait -->
-                <div class="portrait-col" data-reveal>
-                    <div class="portrait-flip" title="Hover to reveal colour">
-                        <!-- Corner brackets stay outside the flip -->
-                        <div class="portrait-corner portrait-corner--tl"></div>
-                        <div class="portrait-corner portrait-corner--tr"></div>
-                        <div class="portrait-corner portrait-corner--bl"></div>
-                        <div class="portrait-corner portrait-corner--br"></div>
-
-                        <div class="portrait-flip-inner">
-                            <!-- Front: pencil sketch (default) -->
-                            <div class="portrait-face portrait-face--front">
-                                <img src="./images/me.png" alt="Deepak C K — sketch" class="portrait-img"
-                                    loading="eager">
-                                <div class="portrait-grain" aria-hidden="true"></div>
-                                <span class="portrait-hint">hover</span>
-                            </div>
-                            <!-- Back: colour version -->
-                            <div class="portrait-face portrait-face--back">
-                                <img src="./images/me-color.png" alt="Deepak C K"
-                                    class="portrait-img portrait-img--color" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portrait-caption">
-                        <span class="portrait-name">Deepak C K</span>
-                        <span class="portrait-title">Full-Stack Developer · Flutter Specialist</span>
-                    </div>
-                </div>
-
-                <div class="about-text-col" data-reveal data-delay="100">
-                    <p class="about-lead">Full-stack developer with <strong>3+ years</strong> of professional experience building production grade applications across mobile and backend systems.</p>
-
-                    <div class="about-items">
-                        <div class="about-item">
-                            <div class="about-item-icon"><i class="fas fa-laptop-code"></i></div>
-                            <div>
-                                <h3>Core Expertise</h3>
-                                <p>Strong expertise in Flutter for cross-platform app development and Node.js/Express for scalable backend services. Experienced in API design and database management.</p>
-                            </div>
-                        </div>
-                        <div class="about-item">
-                            <div class="about-item-icon"><i class="fas fa-cogs"></i></div>
-                            <div>
-                                <h3>Technical Skills</h3>
-                                <p>Proficient in building robust APIs, implementing secure authentication systems (JWT), and using databases like MongoDB, PostgreSQL, and Redis.</p>
-                            </div>
-                        </div>
-                        <div class="about-item">
-                            <div class="about-item-icon"><i class="fas fa-project-diagram"></i></div>
-                            <div>
-                                <h3>Project Highlights</h3>
-                                <p>Delivered real-world products including project management tools, CRM platforms, analytics systems, and cross-platform Flutter applications.</p>
-                            </div>
-                        </div>
-                        <div class="about-item">
-                            <div class="about-item-icon"><i class="fas fa-code-branch"></i></div>
-                            <div>
-                                <h3>Professional Approach</h3>
-                                <p>Passionate about clean architecture, performance optimization, and creating maintainable code across the full stack.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="about-stats-col" data-reveal data-delay="150">
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                        <div class="stat-value">3+</div>
-                        <div class="stat-label">Years Experience</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-rocket"></i></div>
-                        <div class="stat-value">7+</div>
-                        <div class="stat-label">Projects Delivered</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-mobile-alt"></i></div>
-                        <div class="stat-value">2</div>
-                        <div class="stat-label">Published Apps</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
-                        <div class="stat-value">8+</div>
-                        <div class="stat-label">Technologies</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tech icons -->
-            <div class="tech-strip" data-reveal data-delay="300">
-                <h3 class="tech-strip-label">Technologies I Work With</h3>
-                <div class="tech-icons">
-                    <div class="tech-icon" data-tech="Node.js"><i class="devicon-nodejs-plain colored"></i></div>
-                    <div class="tech-icon" data-tech="TypeScript"><i class="devicon-typescript-plain colored"></i></div>
-                    <div class="tech-icon" data-tech="Dart"><i class="devicon-dart-plain colored"></i></div>
-                    <div class="tech-icon" data-tech="React.js"><i class="devicon-react-original colored"></i></div>
-                    <div class="tech-icon" data-tech="Vue.js"><i class="devicon-vuejs-plain colored"></i></div>
-                    <div class="tech-icon" data-tech="Flutter"><i class="devicon-flutter-plain colored"></i></div>
-                    <div class="tech-icon" data-tech="MongoDB"><i class="devicon-mongodb-plain colored"></i></div>
-                    <div class="tech-icon" data-tech="PostgreSQL"><i class="devicon-postgresql-plain colored"></i></div>
-                    <div class="tech-icon" data-tech="Redis"><i class="devicon-redis-plain colored"></i></div>
-                    <div class="tech-icon" data-tech="Git"><i class="devicon-git-plain colored"></i></div>
-                    <div class="tech-icon" data-tech="Python"><i class="devicon-python-plain colored"></i></div>
-                    <div class="tech-icon" data-tech="n8n"><i class="fas fa-network-wired" style="color:#EA4B71"></i></div>
-                </div>
-            </div>
-        </div>
+    <!-- ============ MARQUEE ============ -->
+    <section class="marquee" aria-label="Technologies I work with">
+      <div class="marquee__track">
+        <ul class="marquee__list">
+          <li>Node.js</li><li>TypeScript</li><li>Dart</li><li>Flutter</li><li>React.js</li><li>Vue.js</li>
+          <li>MongoDB</li><li>PostgreSQL</li><li>Redis</li><li>Git</li><li>Python</li><li>n8n</li>
+        </ul>
+      </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-         SKILLS
-    ═══════════════════════════════════════════════ -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <div class="section-header" data-reveal>
-                <p class="section-label">What I Know</p>
-                <h2 class="section-title">My Skills</h2>
+    <!-- ============ ABOUT ============ -->
+    <section class="section about" id="about">
+      <div class="container">
+        <header class="section-head">
+          <span class="section-head__index">01</span>
+          <p class="eyebrow">Who I am</p>
+        </header>
+
+        <div class="about__grid">
+          <figure class="about__photo" data-cursor="Hi!">
+            <div class="about__photo-frame">
+              <picture>
+                <source srcset="images/deepak-480.webp 480w, images/deepak-900.webp 900w" sizes="(max-width: 1024px) 92vw, 460px" type="image/webp">
+                <img src="images/deepak.jpg" alt="Portrait of Deepak C K holding a camera" width="900" height="900" loading="lazy" decoding="async">
+              </picture>
             </div>
+            <figcaption>
+              <span>Deepak C K</span>
+              <span>Full-Stack Developer · Flutter Specialist</span>
+            </figcaption>
+          </figure>
 
-            <div class="skills-grid">
-                <!-- Primary -->
-                <div class="skill-group" data-reveal>
-                    <h3 class="skill-group-title">Primary Skills</h3>
-                    <div class="skill-tags">
-                        <!-- Node.js -->
-                        <div class="skill-tag skill-tag--primary">
-                            <div class="skill-tag-icon"><i class="devicon-nodejs-plain colored"></i></div>
-                            <div class="skill-tag-info">
-                                <span class="skill-tag-name">Node.js &amp; Express.js</span>
-                                <span class="skill-tag-xp">Microservices &amp; REST APIs</span>
-                            </div>
-                        </div>
-                        <!-- Flutter -->
-                        <div class="skill-tag skill-tag--primary">
-                            <div class="skill-tag-icon"><i class="devicon-flutter-plain colored"></i></div>
-                            <div class="skill-tag-info">
-                                <span class="skill-tag-name">Flutter</span>
-                                <span class="skill-tag-xp">BLoC &amp; Cross-Platform</span>
-                            </div>
-                        </div>
-                        <!-- MongoDB & PostgreSQL -->
-                        <div class="skill-tag skill-tag--primary">
-                            <div class="skill-tag-icon icon-group">
-                                <i class="devicon-mongodb-plain colored"></i>
-                                <i class="devicon-postgresql-plain colored"></i>
-                            </div>
-                            <div class="skill-tag-info">
-                                <span class="skill-tag-name">MongoDB &amp; PostgreSQL</span>
-                                <span class="skill-tag-xp">Database Management</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <div class="about__body">
+            <p class="about__statement js-scrub-words">
+              Full-stack developer with 3+ years of professional experience building production-grade applications across mobile and backend systems.
+            </p>
 
-                <!-- Secondary -->
-                <div class="skill-group" data-reveal data-delay="100">
-                    <h3 class="skill-group-title">Frontend &amp; Frameworks</h3>
-                    <div class="skill-tags">
-                        <div class="skill-tag skill-tag--secondary">
-                            <div class="skill-tag-icon icon-group">
-                                <i class="devicon-react-original colored"></i>
-                                <i class="devicon-vuejs-plain colored"></i>
-                            </div>
-                            <div class="skill-tag-info">
-                                <span class="skill-tag-name">React.js &amp; Vue.js</span>
-                                <span class="skill-tag-xp">Frontend Frameworks (Basic)</span>
-                            </div>
-                        </div>
-                        <div class="skill-tag skill-tag--secondary">
-                            <div class="skill-tag-icon icon-group">
-                                <i class="devicon-html5-plain colored"></i>
-                                <i class="devicon-css3-plain colored"></i>
-                                <i class="devicon-typescript-plain colored"></i>
-                            </div>
-                            <div class="skill-tag-info">
-                                <span class="skill-tag-name">HTML, CSS, JS/TS</span>
-                                <span class="skill-tag-xp">Web Fundamentals</span>
-                            </div>
-                        </div>
-                        <div class="skill-tag skill-tag--secondary">
-                            <div class="skill-tag-icon"><i class="fas fa-layer-group" style="color:#a78bfa"></i></div>
-                            <div class="skill-tag-info">
-                                <span class="skill-tag-name">Clean Architecture</span>
-                                <span class="skill-tag-xp">Scalable Design Patterns</span>
-                            </div>
-                        </div>
-                        <div class="skill-tag skill-tag--secondary">
-                            <div class="skill-tag-icon icon-group">
-                                <i class="devicon-java-plain colored"></i>
-                                <i class="devicon-spring-plain colored"></i>
-                                <i class="devicon-python-plain colored"></i>
-                            </div>
-                            <div class="skill-tag-info">
-                                <span class="skill-tag-name">Java, Spring Boot &amp; Python</span>
-                                <span class="skill-tag-xp">Secondary Backend</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Other -->
-                <div class="skill-group" data-reveal data-delay="200">
-                    <h3 class="skill-group-title">Tools &amp; APIs</h3>
-                    <div class="skill-tags">
-                        <!-- n8n -->
-                        <div class="skill-tag skill-tag--other">
-                            <div class="skill-tag-icon"><i class="fas fa-network-wired" style="color:#EA4B71"></i></div>
-                            <div class="skill-tag-info">
-                                <span class="skill-tag-name">n8n Automation</span>
-                                <span class="skill-tag-xp">AI &amp; Workflows</span>
-                            </div>
-                        </div>
-                        <!-- Swagger & Postman -->
-                        <div class="skill-tag skill-tag--other">
-                            <div class="skill-tag-icon icon-group">
-                                <i class="devicon-swagger-plain colored"></i>
-                                <i class="devicon-postman-plain colored"></i>
-                            </div>
-                            <div class="skill-tag-info">
-                                <span class="skill-tag-name">Swagger &amp; Postman</span>
-                                <span class="skill-tag-xp">API Docs &amp; Testing</span>
-                            </div>
-                        </div>
-                        <!-- Socket.IO & Redis -->
-                        <div class="skill-tag skill-tag--other">
-                            <div class="skill-tag-icon icon-group">
-                                <i class="devicon-socketio-original"></i>
-                                <i class="devicon-redis-plain colored"></i>
-                            </div>
-                            <div class="skill-tag-info">
-                                <span class="skill-tag-name">Socket.IO &amp; Redis</span>
-                                <span class="skill-tag-xp">Real-time &amp; Caching</span>
-                            </div>
-                        </div>
-                        <!-- Tools -->
-                        <div class="skill-tag skill-tag--other">
-                            <div class="skill-tag-icon icon-group">
-                                <i class="devicon-androidstudio-plain colored"></i>
-                                <i class="devicon-figma-plain colored"></i>
-                                <i class="devicon-git-plain colored"></i>
-                            </div>
-                            <div class="skill-tag-info">
-                                <span class="skill-tag-name">Android Studio, Figma, Git</span>
-                                <span class="skill-tag-xp">Development Tools</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="about__points">
+              <article class="point" data-reveal>
+                <h3>Core Expertise</h3>
+                <p>Strong expertise in Flutter for cross-platform app development and Node.js/Express for scalable backend services. Experienced in API design and database management.</p>
+              </article>
+              <article class="point" data-reveal>
+                <h3>Technical Skills</h3>
+                <p>Proficient in building robust APIs, implementing secure authentication systems (JWT), and using databases like MongoDB, PostgreSQL, and Redis.</p>
+              </article>
+              <article class="point" data-reveal>
+                <h3>Project Highlights</h3>
+                <p>Delivered real-world products including project management tools, CRM platforms, analytics systems, and cross-platform Flutter applications.</p>
+              </article>
+              <article class="point" data-reveal>
+                <h3>Professional Approach</h3>
+                <p>Passionate about clean architecture, performance optimization, and creating maintainable code across the full stack.</p>
+              </article>
             </div>
+          </div>
         </div>
+
+        <dl class="stats">
+          <div class="stat" data-reveal><dt>Years Experience</dt><dd><span class="js-counter" data-to="3">0</span><sup>+</sup></dd></div>
+          <div class="stat" data-reveal><dt>Projects Delivered</dt><dd><span class="js-counter" data-to="7">0</span><sup>+</sup></dd></div>
+          <div class="stat" data-reveal><dt>Published Apps</dt><dd><span class="js-counter" data-to="2">0</span></dd></div>
+          <div class="stat" data-reveal><dt>Technologies</dt><dd><span class="js-counter" data-to="8">0</span><sup>+</sup></dd></div>
+        </dl>
+      </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-         PROJECTS
-    ═══════════════════════════════════════════════ -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <div class="section-header" data-reveal>
-                <p class="section-label">What I've Built</p>
-                <h2 class="section-title">My Projects</h2>
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="section experience" id="experience">
+      <div class="container">
+        <header class="section-head">
+          <span class="section-head__index">02</span>
+          <p class="eyebrow">Where I've worked</p>
+        </header>
+        <h2 class="section-title js-split-words">Experience &amp; <em>education</em></h2>
+
+        <div class="timeline">
+          <div class="timeline__rail" aria-hidden="true"><span class="timeline__fill"></span></div>
+
+          <!-- Techwyse -->
+          <article class="role" data-reveal>
+            <div class="role__aside">
+              <span class="role__node" aria-hidden="true"></span>
+              <p class="role__date">Mar 2023 — Jun 2026</p>
             </div>
+            <div class="role__main">
+              <h3 class="role__title">Backend Developer</h3>
+              <p class="role__company">Techwyse IT Solutions Pvt. Ltd</p>
 
-            <div class="bento-grid">
-                <!-- Sanchara -->
-                <div class="bento-card bento-card--featured" data-reveal>
-                    <div class="bento-card-badge">Own Product</div>
-                    <div class="bento-card-visual">
-                        <img src="./images/sanchara.png" alt="Sanchara" loading="lazy">
-                    </div>
-                    <div class="bento-card-content">
-                        <h3>Sanchara</h3>
-                        <p>A comprehensive travel companion built for groups who love exploring the world. Features real-time live location tracking, route planning with waypoints, instant trip alerts for hazards or fuel stops, and an emergency QR profile. Built robustly with Flutter and Node.js.</p>
-                        <div class="bento-tech">
-                            <span>Flutter</span><span>Node.js</span><span>Real-time Sync</span><span>Maps</span>
-                        </div>
-                        <a href="https://thesanchara.com" target="_blank" rel="noopener noreferrer" class="bento-link">
-                            View Project <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
+              <div class="metric spotlight">
+                <div class="metric__nums" aria-label="API response time reduced from about 15 seconds to about 1 second">
+                  <span class="metric__from">~15s</span>
+                  <svg viewBox="0 0 48 12" width="48" height="12" aria-hidden="true"><path d="M0 6h44M38 1l6 5-6 5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+                  <span class="metric__to">~1s</span>
                 </div>
+                <p>Critical WorkLuge API response time cut by <strong>~93%</strong> through query optimization, pagination and leaner data processing.</p>
+              </div>
 
-                <!-- SafeRent — large card -->
-                <div class="bento-card" data-reveal>
-                    <div class="bento-card-badge">Published App</div>
-                    <div class="bento-card-visual">
-                        <img src="./images/saferent.png" alt="SafeRent" loading="lazy">
-                    </div>
-                    <div class="bento-card-content">
-                        <h3>SafeRent</h3>
-                        <p>A comprehensive rental management application for equipment dealers. Features real-time inventory management, payment processing, and secured authentication. Built with Flutter (BLoC architecture) for optimal performance and cross-platform capabilities.</p>
-                        <div class="bento-tech">
-                            <span>Flutter (BLoC)</span><span>Spring Boot</span><span>PostgreSQL</span><span>RESTful APIs</span>
-                        </div>
-                        <a href="https://play.google.com/store/apps/details?id=com.saferent.mobile&pcampaignid=web_share"
-                            target="_blank" rel="noopener noreferrer" class="bento-link">
-                            View on Play Store <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- PTF -->
-                <div class="bento-card" data-reveal data-delay="50">
-                    <div class="bento-card-badge">Client Project</div>
-                    <div class="bento-card-visual">
-                        <img src="./images/ptf.png" alt="PTF Attendance App" loading="lazy">
-                    </div>
-                    <div class="bento-card-content">
-                        <h3>PTF Attendance App</h3>
-                        <p>Advanced cross-platform Flutter application for QR-based employee attendance tracking. Includes real-time validation, leave management with Firebase notifications, and seamless Node.js/Express backend synchronization.</p>
-                        <div class="bento-tech">
-                            <span>Flutter</span><span>Node.js</span><span>Express.js</span><span>MongoDB</span><span>Firebase</span>
-                        </div>
-                        <span class="bento-private"><i class="fas fa-lock"></i> Private Project</span>
-                    </div>
-                </div>
-
-                <!-- Workluge -->
-                <div class="bento-card" data-reveal data-delay="100">
-                    <div class="bento-card-badge">Company Project</div>
-                    <div class="bento-card-visual">
-                        <img src="./images/workluge.png" alt="Workluge" loading="lazy">
-                    </div>
-                    <div class="bento-card-content">
-                        <h3>Workluge</h3>
-                        <p>An innovative project management platform tailored for team collaboration. Built with modular Node.js/Express microservices featuring high-performance REST APIs, JWT role-based access, and highly optimized database queries.</p>
-                        <div class="bento-tech">
-                            <span>Node.js</span><span>Express.js</span><span>Microservices</span><span>MongoDB</span><span>JWT</span>
-                        </div>
-                        <a href="https://workluge.com" target="_blank" rel="noopener noreferrer" class="bento-link">
-                            View Project <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- AdLuge -->
-                <div class="bento-card" data-reveal data-delay="150">
-                    <div class="bento-card-badge">Company Project</div>
-                    <div class="bento-card-visual">
-                        <img src="./images/adluge.png" alt="AdLuge CRM" loading="lazy">
-                    </div>
-                    <div class="bento-card-content">
-                        <h3>AdLuge CRM</h3>
-                        <p>Contributed to AdLuge's agency management platform. Optimized legacy backend API services for drastic reduction in response times. Built n8n workflows for AI-driven SEO analysis and implemented automated cron jobs for dynamic client reporting.</p>
-                        <div class="bento-tech">
-                            <span>Node.js</span><span>REST APIs</span><span>n8n</span><span>Cron Jobs</span>
-                        </div>
-                        <a href="https://crm.adluge.com/" target="_blank" rel="noopener noreferrer" class="bento-link">
-                            View Project <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- CallLuge -->
-                <div class="bento-card" data-reveal data-delay="200">
-                    <div class="bento-card-badge">Company Project</div>
-                    <div class="bento-card-visual">
-                        <img src="./images/callluge.svg" alt="CallLuge" loading="lazy">
-                    </div>
-                    <div class="bento-card-content">
-                        <h3>CallLuge</h3>
-                        <p>Premier call analytics platform for businesses. Migrated legacy Django modules to a modernized stack. Developed a comprehensive call reconciliation system comparing Twilio logs with internal databases to resolve data inconsistencies.</p>
-                        <div class="bento-tech">
-                            <span>Python</span><span>Django</span><span>Call Analytics</span><span>Twilio</span>
-                        </div>
-                        <a href="https://app.callluge.com/" target="_blank" rel="noopener noreferrer"
-                            class="bento-link">
-                            View Project <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Dtrips -->
-                <div class="bento-card" data-reveal data-delay="250">
-                    <div class="bento-card-badge">Client Project</div>
-                    <div class="bento-card-visual">
-                        <img src="./images/dtrips.jpg" alt="Dtrips" loading="lazy">
-                    </div>
-                    <div class="bento-card-content">
-                        <h3>Dtrips</h3>
-                        <p>A comprehensive travel booking application with mobile and web interfaces. Integrated Razorpay payment gateway and Firebase notifications for real-time booking updates. Features hotel and flight booking with smooth end-to-end booking flows.</p>
-                        <div class="bento-tech">
-                            <span>Flutter</span><span>Spring Boot</span><span>Firebase</span><span>Razorpay</span>
-                        </div>
-                        <span class="bento-private"><i class="fas fa-lock"></i> Private Project</span>
-                    </div>
-                </div>
-
-                <!-- Home Automation -->
-                <div class="bento-card" data-reveal data-delay="250">
-                    <div class="bento-card-badge">Academic Project</div>
-                    <div class="bento-card-visual">
-                        <img src="./images/smart-home.jpg" alt="Home Automation System" loading="lazy">
-                    </div>
-                    <div class="bento-card-content">
-                        <h3>Home Automation System</h3>
-                        <p>ESP32-based home automation solution enabling Wi-Fi control of electrical appliances. Integrated relay systems, MQTT protocol, mobile controls, and IFTTT-based voice assistant automation.</p>
-                        <div class="bento-tech">
-                            <span>ESP32</span><span>MQTT</span><span>IoT</span><span>IFTTT</span>
-                        </div>
-                        <span class="bento-private"><i class="fas fa-graduation-cap"></i> Academic Project</span>
-                    </div>
-                </div>
+              <div class="role__projects">
+                <details class="proj-acc" open>
+                  <summary><span>WorkLuge</span><small>Project Management Platform</small><i aria-hidden="true"></i></summary>
+                  <ul>
+                    <li>Developed scalable Node.js/Express REST APIs supporting task management, time tracking and activity monitoring across multiple internal teams.</li>
+                    <li>Designed and implemented secure authentication and role-based access control using JWT.</li>
+                    <li>Contributed to modular, microservice-oriented backend architecture, improving maintainability and service separation.</li>
+                    <li>Optimized API performance and reliability through query tuning and structured error handling.</li>
+                    <li>Created and maintained comprehensive API documentation using Swagger and Postman.</li>
+                  </ul>
+                </details>
+                <details class="proj-acc">
+                  <summary><span>AdLuge</span><small>CRM Platform</small><i aria-hidden="true"></i></summary>
+                  <ul>
+                    <li>Optimized existing backend APIs, significantly reducing response times and improving overall system performance.</li>
+                    <li>Debugged and refactored legacy and deprecated code, enhancing reliability and maintainability.</li>
+                    <li>Designed and implemented scheduled cron jobs for automated daily, weekly and monthly client reporting.</li>
+                    <li>Developed dynamic email workflows, lead-based notifications and reusable email templates.</li>
+                    <li>Built an AI-driven website audit and ranking feature (“AI Fuels”) using n8n workflows, automating SEO analysis, scoring and ranking.</li>
+                  </ul>
+                </details>
+                <details class="proj-acc">
+                  <summary><span>CallLuge</span><small>Call Analytics System</small><i aria-hidden="true"></i></summary>
+                  <ul>
+                    <li>Migrated legacy Django modules to a modernized backend stack, refactoring deprecated components.</li>
+                    <li>Developed a call reconciliation system comparing Twilio logs with internal databases to identify missing leads and data inconsistencies.</li>
+                    <li>Enhanced automated email workflows for reporting and notifications.</li>
+                  </ul>
+                </details>
+              </div>
             </div>
+          </article>
+
+          <!-- Techgentsia -->
+          <article class="role" data-reveal>
+            <div class="role__aside">
+              <span class="role__node" aria-hidden="true"></span>
+              <p class="role__date">Apr 2022 — Apr 2023</p>
+            </div>
+            <div class="role__main">
+              <h3 class="role__title">Flutter / Spring Boot Developer Trainee</h3>
+              <p class="role__company">Techgentsia Software Technologies Pvt. Ltd.</p>
+              <div class="role__projects">
+                <details class="proj-acc" open>
+                  <summary><span>PTF Attendance App</span><small>Flutter · Node.js</small><i aria-hidden="true"></i></summary>
+                  <ul>
+                    <li>Developed a cross-platform Flutter application for QR-based employee attendance and leave management.</li>
+                    <li>Built and integrated backend services using Node.js/Express for secure data handling and validation.</li>
+                    <li>Implemented real-time validation and asynchronization, ensuring accurate attendance tracking.</li>
+                    <li>Improved UI/UX flows, reducing manual errors and enhancing usability.</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+          </article>
+
+          <!-- Education -->
+          <article class="role role--edu" data-reveal>
+            <div class="role__aside">
+              <span class="role__node" aria-hidden="true"></span>
+              <p class="role__date">2022</p>
+              <p class="role__tag">Education</p>
+            </div>
+            <div class="role__main">
+              <h3 class="role__title">Diploma in Computer Hardware Engineering</h3>
+              <p class="role__company">Government Polytechnic College, Cherthala</p>
+              <p class="role__note">Academic project: IoT Home Automation System — an ESP32-based solution for Wi-Fi control of electrical appliances.</p>
+            </div>
+          </article>
         </div>
+      </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-         GAMES
-    ═══════════════════════════════════════════════ -->
-    <section id="games" class="games">
-        <div class="container">
-            <div class="section-header" data-reveal>
-                <p class="section-label">For Fun</p>
-                <h2 class="section-title">Fun &amp; Games</h2>
-            </div>
-            <div class="games-grid">
-                <div class="game-card" data-reveal>
-                    <div class="game-card-header">
-                        <h3><i class="fas fa-dove"></i> Flappy Bird</h3>
-                    </div>
-                    <div id="flappy-bird-container" class="game-container"></div>
-                    <p class="game-instructions">
-                        <kbd>SPACE</kbd> or <kbd>CLICK</kbd> to fly &nbsp;·&nbsp; <kbd>B</kbd> for power boost
-                    </p>
-                </div>
-                <div class="game-card" data-reveal data-delay="100">
-                    <div class="game-card-header">
-                        <h3><i class="fas fa-gamepad"></i> Snake</h3>
-                    </div>
-                    <div id="snake-container" class="game-container"></div>
-                    <p class="game-instructions">
-                        <kbd>↑ ↓ ← →</kbd> to move &nbsp;·&nbsp; <kbd>P</kbd> to pause
-                    </p>
-                </div>
-            </div>
+    <!-- ============ SKILLS ============ -->
+    <section class="section skills" id="skills">
+      <div class="container">
+        <header class="section-head">
+          <span class="section-head__index">03</span>
+          <p class="eyebrow">What I know</p>
+        </header>
+        <h2 class="section-title js-split-words">A toolkit for the <em>full stack</em></h2>
+
+        <div class="bento">
+          <article class="tile tile--primary spotlight" data-reveal>
+            <h3 class="tile__label">Primary Skills</h3>
+            <ul class="skill-list">
+              <li><span>Node.js &amp; Express.js</span><small>Microservices &amp; REST APIs</small></li>
+              <li><span>Flutter</span><small>BLoC &amp; Cross-Platform</small></li>
+              <li><span>MongoDB &amp; PostgreSQL</span><small>Database Management</small></li>
+            </ul>
+            <div class="tile__orb" aria-hidden="true"></div>
+          </article>
+
+          <article class="tile spotlight" data-reveal>
+            <h3 class="tile__label">Frontend &amp; Frameworks</h3>
+            <ul class="skill-list">
+              <li><span>React.js &amp; Vue.js</span><small>Frontend Frameworks (Basic)</small></li>
+              <li><span>HTML, CSS, JS/TS</span><small>Web Fundamentals</small></li>
+              <li><span>Clean Architecture</span><small>Scalable Design Patterns</small></li>
+              <li><span>Java, Spring Boot &amp; Python</span><small>Secondary Backend</small></li>
+            </ul>
+          </article>
+
+          <article class="tile spotlight" data-reveal>
+            <h3 class="tile__label">Tools &amp; APIs</h3>
+            <ul class="skill-list">
+              <li><span>n8n Automation</span><small>AI &amp; Workflows</small></li>
+              <li><span>Swagger &amp; Postman</span><small>API Docs &amp; Testing</small></li>
+              <li><span>Socket.IO &amp; Redis</span><small>Real-time &amp; Caching</small></li>
+              <li><span>Android Studio, Figma, Git</span><small>Development Tools</small></li>
+            </ul>
+          </article>
+
+          <article class="tile tile--wide spotlight" data-reveal>
+            <h3 class="tile__label">Languages</h3>
+            <ul class="chips">
+              <li>JavaScript</li><li>TypeScript</li><li>Dart</li><li>Java</li><li>Python</li><li>C/C++</li><li>PHP</li>
+            </ul>
+          </article>
+
+          <article class="tile tile--wide spotlight" data-reveal>
+            <h3 class="tile__label">Databases</h3>
+            <ul class="chips">
+              <li>MongoDB</li><li>PostgreSQL</li><li>Redis</li><li>Firebase Firestore</li><li>Firebase Realtime DB</li>
+            </ul>
+          </article>
         </div>
+      </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-         CONTACT
-    ═══════════════════════════════════════════════ -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header" data-reveal>
-                <p class="section-label">Let's Talk</p>
-                <h2 class="section-title">Get In Touch</h2>
-            </div>
+    <!-- ============ WORK ============ -->
+    <section class="section work" id="work">
+      <div class="container">
+        <header class="section-head">
+          <span class="section-head__index">04</span>
+          <p class="eyebrow">What I've built</p>
+        </header>
+        <h2 class="section-title js-split-words">Selected <em>work</em></h2>
 
-            <div class="contact-grid">
-                <div class="contact-form-col" data-reveal>
-                    <form id="contact-form" class="contact-form" novalidate>
-                        <div class="form-group">
-                            <label for="contact-name">Your Name</label>
-                            <input type="text" id="contact-name" name="name" placeholder="John Doe" required
-                                autocomplete="name">
-                            <span class="form-focus-line"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-email">Your Email</label>
-                            <input type="email" id="contact-email" name="email" placeholder="john@example.com" required
-                                autocomplete="email">
-                            <span class="form-focus-line"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="contact-message">Message</label>
-                            <textarea id="contact-message" name="message" rows="5"
-                                placeholder="Tell me about your project..." required></textarea>
-                            <span class="form-focus-line"></span>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full" id="submit-btn">
-                            <span class="btn-label">Send Message</span>
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                        <div id="form-status" class="form-status" aria-live="polite"></div>
-                    </form>
-                </div>
+        <!-- Featured: Sanchara -->
+        <article class="featured spotlight" data-reveal>
+          <div class="featured__copy">
+            <p class="badge">Own Product</p>
+            <h3 class="featured__title">Sanchara</h3>
+            <p class="featured__desc">A comprehensive travel companion built for groups who love exploring the world. Features real-time live location tracking, route planning with waypoints, instant trip alerts for hazards or fuel stops, and an emergency QR profile. Built robustly with Flutter and Node.js.</p>
+            <ul class="tags"><li>Flutter</li><li>Node.js</li><li>Real-time Sync</li><li>Maps</li></ul>
+            <a class="btn btn--primary" href="https://thesanchara.com" target="_blank" rel="noopener" data-magnetic>
+              <span>Visit thesanchara.com</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+          <div class="featured__visual" aria-hidden="true">
+            <svg class="route" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <linearGradient id="routeGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="currentColor" stop-opacity=".15"/>
+                  <stop offset="1" stop-color="currentColor" stop-opacity=".9"/>
+                </linearGradient>
+              </defs>
+              <g class="route__grid" stroke="currentColor" stroke-opacity=".08">
+                <path d="M0 80h400M0 160h400M0 240h400M0 320h400M80 0v400M160 0v400M240 0v400M320 0v400"/>
+              </g>
+              <path class="route__ghost" d="M40 340 C 90 300, 70 230, 140 210 S 250 230, 270 160 S 330 70, 360 50" fill="none" stroke="currentColor" stroke-opacity=".12" stroke-width="10" stroke-linecap="round"/>
+              <path class="route__path" d="M40 340 C 90 300, 70 230, 140 210 S 250 230, 270 160 S 330 70, 360 50" fill="none" stroke="url(#routeGrad)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="6 8"/>
+              <circle class="route__stop" cx="40" cy="340" r="6" fill="currentColor"/>
+              <circle class="route__stop" cx="140" cy="210" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+              <circle class="route__stop" cx="270" cy="160" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+              <g class="route__pin" transform="translate(360 50)">
+                <circle r="18" fill="currentColor" fill-opacity=".08"/>
+                <circle r="7" fill="currentColor"/>
+              </g>
+            </svg>
+            <div class="featured__icon-wrap"><img class="featured__icon" src="images/sanchara.webp" alt="" width="512" height="512" loading="lazy" decoding="async"></div>
+          </div>
+        </article>
 
-                <div class="contact-info-col" data-reveal data-delay="150">
-                    <div class="contact-info-card">
-                        <div class="contact-info-item">
-                            <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
-                            <div class="ci-text">
-                                <h4>Address</h4>
-                                <p>Choondasseril, Pollethai PO, Kalavoor, Alappuzha, 688522</p>
-                            </div>
-                        </div>
-                        <div class="contact-info-item">
-                            <div class="ci-icon"><i class="fas fa-phone"></i></div>
-                            <div class="ci-text">
-                                <h4>Phone</h4>
-                                <p><a href="tel:+919072995017">+91 9072995017</a></p>
-                            </div>
-                        </div>
-                        <div class="contact-info-item">
-                            <div class="ci-icon"><i class="fas fa-envelope"></i></div>
-                            <div class="ci-text">
-                                <h4>Email</h4>
-                                <p><a href="mailto:deepakck02@gmail.com">deepakck02@gmail.com</a></p>
-                            </div>
-                        </div>
-
-                        <div class="contact-social">
-                            <a href="https://github.com/deepak-02" target="_blank" rel="noopener noreferrer"
-                                class="social-btn" aria-label="GitHub">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://www.linkedin.com/in/deepak-ck/" target="_blank" rel="noopener noreferrer"
-                                class="social-btn" aria-label="LinkedIn">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            <a href="https://www.instagram.com/_deepak_c_k/" target="_blank" rel="noopener noreferrer"
-                                class="social-btn" aria-label="Instagram">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="https://www.facebook.com/deepak.ck.319" target="_blank" rel="noopener noreferrer"
-                                class="social-btn" aria-label="Facebook">
-                                <i class="fab fa-facebook"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Grid -->
+        <div class="pgrid">
+          <article class="pcard spotlight">
+              <div class="pcard__top"><span class="pcard__index">02</span><p class="badge">Published App</p></div>
+              <div class="pcard__visual">
+                <span class="pcard__rings" aria-hidden="true"></span>
+                <img class="pcard__halo" src="images/p-saferent.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                <img class="pcard__logo" src="images/p-saferent.webp" alt="SafeRent logo" width="320" height="320" loading="lazy" decoding="async">
+              </div>
+              <div class="pcard__body">
+                <h3 class="pcard__title">SafeRent</h3>
+                <p class="pcard__desc">A comprehensive rental management application for equipment dealers. Features real-time inventory management, payment processing, and secured authentication. Built with Flutter (BLoC architecture) for optimal performance and cross-platform capabilities.</p>
+                <ul class="tags"><li>Flutter (BLoC)</li><li>Spring Boot</li><li>PostgreSQL</li><li>RESTful APIs</li></ul>
+                <div class="pcard__foot"><a class="link-arrow" href="https://play.google.com/store/apps/details?id=com.saferent.mobile&amp;pcampaignid=web_share" target="_blank" rel="noopener">View on Play Store <span aria-hidden="true">↗</span></a></div>
+              </div>
+            </article>
+          <article class="pcard spotlight">
+              <div class="pcard__top"><span class="pcard__index">03</span><p class="badge">Client Project</p></div>
+              <div class="pcard__visual">
+                <span class="pcard__rings" aria-hidden="true"></span>
+                <img class="pcard__halo" src="images/p-ptf.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                <img class="pcard__logo" src="images/p-ptf.webp" alt="PTF Attendance App logo" width="320" height="320" loading="lazy" decoding="async">
+              </div>
+              <div class="pcard__body">
+                <h3 class="pcard__title">PTF Attendance App</h3>
+                <p class="pcard__desc">Advanced cross-platform Flutter application for QR-based employee attendance tracking. Includes real-time validation, leave management with Firebase notifications, and seamless Node.js/Express backend synchronization.</p>
+                <ul class="tags"><li>Flutter</li><li>Node.js</li><li>Express.js</li><li>MongoDB</li><li>Firebase</li></ul>
+                <div class="pcard__foot"><span class="link-muted">Private Project</span></div>
+              </div>
+            </article>
+          <article class="pcard spotlight">
+              <div class="pcard__top"><span class="pcard__index">04</span><p class="badge">Company Project</p></div>
+              <div class="pcard__visual">
+                <span class="pcard__rings" aria-hidden="true"></span>
+                <img class="pcard__halo" src="images/p-workluge.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                <img class="pcard__logo" src="images/p-workluge.webp" alt="Workluge logo" width="320" height="320" loading="lazy" decoding="async">
+              </div>
+              <div class="pcard__body">
+                <h3 class="pcard__title">Workluge</h3>
+                <p class="pcard__desc">An innovative project management platform tailored for team collaboration. Built with modular Node.js/Express microservices featuring high-performance REST APIs, JWT role-based access, and highly optimized database queries.</p>
+                <ul class="tags"><li>Node.js</li><li>Express.js</li><li>Microservices</li><li>MongoDB</li><li>JWT</li></ul>
+                <div class="pcard__foot"><a class="link-arrow" href="https://workluge.com" target="_blank" rel="noopener">View Project <span aria-hidden="true">↗</span></a></div>
+              </div>
+            </article>
+          <article class="pcard spotlight">
+              <div class="pcard__top"><span class="pcard__index">05</span><p class="badge">Company Project</p></div>
+              <div class="pcard__visual">
+                <span class="pcard__rings" aria-hidden="true"></span>
+                <img class="pcard__halo" src="images/p-adluge.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                <img class="pcard__logo" src="images/p-adluge.webp" alt="AdLuge logo" width="320" height="320" loading="lazy" decoding="async">
+              </div>
+              <div class="pcard__body">
+                <h3 class="pcard__title">AdLuge CRM</h3>
+                <p class="pcard__desc">Contributed to AdLuge's agency management platform. Optimized legacy backend API services for drastic reduction in response times. Built n8n workflows for AI-driven SEO analysis and implemented automated cron jobs for dynamic client reporting.</p>
+                <ul class="tags"><li>Node.js</li><li>REST APIs</li><li>n8n</li><li>Cron Jobs</li></ul>
+                <div class="pcard__foot"><a class="link-arrow" href="https://crm.adluge.com/" target="_blank" rel="noopener">View Project <span aria-hidden="true">↗</span></a></div>
+              </div>
+            </article>
+          <article class="pcard spotlight">
+              <div class="pcard__top"><span class="pcard__index">06</span><p class="badge">Company Project</p></div>
+              <div class="pcard__visual">
+                <span class="pcard__rings" aria-hidden="true"></span>
+                <img class="pcard__halo" src="images/p-callluge.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                <img class="pcard__logo" src="images/p-callluge.webp" alt="CallLuge logo" width="320" height="320" loading="lazy" decoding="async">
+              </div>
+              <div class="pcard__body">
+                <h3 class="pcard__title">CallLuge</h3>
+                <p class="pcard__desc">Premier call analytics platform for businesses. Migrated legacy Django modules to a modernized stack. Developed a comprehensive call reconciliation system comparing Twilio logs with internal databases to resolve data inconsistencies.</p>
+                <ul class="tags"><li>Python</li><li>Django</li><li>Call Analytics</li><li>Twilio</li></ul>
+                <div class="pcard__foot"><a class="link-arrow" href="https://app.callluge.com/" target="_blank" rel="noopener">View Project <span aria-hidden="true">↗</span></a></div>
+              </div>
+            </article>
+          <article class="pcard spotlight">
+              <div class="pcard__top"><span class="pcard__index">07</span><p class="badge">Client Project</p></div>
+              <div class="pcard__visual">
+                <span class="pcard__rings" aria-hidden="true"></span>
+                <img class="pcard__halo" src="images/p-dtrips.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                <img class="pcard__logo" src="images/p-dtrips.webp" alt="Dtrips logo" width="320" height="320" loading="lazy" decoding="async">
+              </div>
+              <div class="pcard__body">
+                <h3 class="pcard__title">Dtrips</h3>
+                <p class="pcard__desc">A comprehensive travel booking application with mobile and web interfaces. Integrated Razorpay payment gateway and Firebase notifications for real-time booking updates. Features hotel and flight booking with smooth end-to-end booking flows.</p>
+                <ul class="tags"><li>Flutter</li><li>Spring Boot</li><li>Firebase</li><li>Razorpay</li></ul>
+                <div class="pcard__foot"><span class="link-muted">Private Project</span></div>
+              </div>
+            </article>
+          <article class="pcard pcard--wide spotlight">
+              <div class="pcard__top"><span class="pcard__index">08</span><p class="badge">Academic Project</p></div>
+              <div class="pcard__visual">
+                <span class="pcard__rings" aria-hidden="true"></span>
+                <img class="pcard__halo" src="images/p-home-automation.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                <img class="pcard__logo" src="images/p-home-automation.webp" alt="Home Automation System illustration" width="320" height="320" loading="lazy" decoding="async">
+              </div>
+              <div class="pcard__body">
+                <h3 class="pcard__title">Home Automation System</h3>
+                <p class="pcard__desc">ESP32-based home automation solution enabling Wi-Fi control of electrical appliances. Integrated relay systems, MQTT protocol, mobile controls, and IFTTT-based voice assistant automation.</p>
+                <ul class="tags"><li>ESP32</li><li>MQTT</li><li>IoT</li><li>IFTTT</li></ul>
+              </div>
+            </article>
         </div>
+      </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-         FOOTER
-    ═══════════════════════════════════════════════ -->
-    <footer class="footer">
-        <div class="container">
-            <p class="footer-copy">© <span id="copyright-year"></span> Deepak C K</p>
+    <!-- ============ CONTACT ============ -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <header class="section-head">
+          <span class="section-head__index">05</span>
+          <p class="eyebrow">Let's talk</p>
+        </header>
+
+        <h2 class="contact__title js-split-words">Let's build something <em>great</em> together.</h2>
+
+        <div class="contact__grid">
+          <form class="form" id="contact-form" novalidate>
+            <div class="field">
+              <input id="f-name" name="name" type="text" autocomplete="name" placeholder=" " required>
+              <label for="f-name">Your name</label>
+              <p class="field__error" id="e-name" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder=" " required>
+              <label for="f-email">Your email</label>
+              <p class="field__error" id="e-email" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <textarea id="f-message" name="message" rows="5" placeholder=" " required></textarea>
+              <label for="f-message">Message</label>
+              <p class="field__error" id="e-message" aria-live="polite"></p>
+            </div>
+            <button class="btn btn--primary btn--submit" type="submit" data-magnetic>
+              <span class="btn__text">Send message</span>
+              <span class="btn__spinner" aria-hidden="true"></span>
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <p class="form__status" role="status" aria-live="polite"></p>
+          </form>
+
+          <aside class="contact__info">
+            <a class="info-row" href="mailto:deepakck02@gmail.com">
+              <span class="info-row__label">Email</span>
+              <span class="info-row__value">deepakck02@gmail.com</span>
+              <span class="info-row__arrow" aria-hidden="true">↗</span>
+            </a>
+            <button class="copy-btn" type="button" data-copy="deepakck02@gmail.com">Copy email</button>
+            <a class="info-row" href="tel:+919072995017">
+              <span class="info-row__label">Phone</span>
+              <span class="info-row__value">+91 9072995017</span>
+              <span class="info-row__arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <ul class="socials" aria-label="Social profiles">
+              <li><a href="https://github.com/deepak-02" target="_blank" rel="noopener" aria-label="GitHub" data-magnetic>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg></a></li>
+              <li><a href="https://www.linkedin.com/in/deepak-ck/" target="_blank" rel="noopener" aria-label="LinkedIn" data-magnetic>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg></a></li>
+              <li><a href="https://www.instagram.com/_deepak_c_k/" target="_blank" rel="noopener" aria-label="Instagram" data-magnetic>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a></li>
+              <li><a href="https://www.facebook.com/deepak.ck.319" target="_blank" rel="noopener" aria-label="Facebook" data-magnetic>
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07Z"/></svg></a></li>
+            </ul>
+          </aside>
         </div>
-    </footer>
+      </div>
+    </section>
+  </main>
 
-    <!-- Scripts — games kept, heavy libs removed -->
-    <script src="js/snake.js"></script>
-    <script src="js/games.js"></script>
-    <script src="js/main.js"></script>
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <p>© <span class="js-year">2026</span> Deepak C K</p>
+        <a href="#home" class="footer__top-link" data-magnetic>Back to top <span aria-hidden="true">↑</span></a>
+      </div>
+      <p class="footer__giant" aria-hidden="true">Deepak C K</p>
+    </div>
+  </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const container = document.getElementById('flappy-bird-container');
-            if (container) {
-                container.innerHTML = '';
-                new FlappyBirdGame('flappy-bird-container');
-            }
-        });
-    </script>
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /* Load animation libraries only when they'll be used (skipped in lite mode) */
+    (function () {
+      var list = window.__LITE__ ? [] : ['js/vendor/gsap.min.js', 'js/vendor/ScrollTrigger.min.js', 'js/vendor/lenis.min.js'];
+      list.push('js/main.js');
+      for (var i = 0; i < list.length; i++) {
+        var s = document.createElement('script');
+        s.src = list[i]; s.async = false;
+        document.body.appendChild(s);
+      }
+    })();
+  </script>
 </body>
-
 </html>
