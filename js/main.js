@@ -647,21 +647,66 @@
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
   });
 
-  /* --- Marquee driven by scroll velocity --- */
-  const list = $('.marquee__list');
-  const track = $('.marquee__track');
-  track.appendChild(list.cloneNode(true)).setAttribute('aria-hidden', 'true');
-  const marquee = gsap.to(track, { xPercent: -50, duration: 32, ease: 'none', repeat: -1 });
-  let dir = 1;
+  /* --- Tech band: two rows drift in opposite directions; scrolling speeds them up,
+         flips their direction and leans the type with the scroll velocity --- */
+  const bandRows = $$('.band__row').map((row, i) => {
+    const track = row.querySelector('.band__track');
+    const list = row.querySelector('.band__list');
+    track.appendChild(list.cloneNode(true)).setAttribute('aria-hidden', 'true');
+    const base = i === 0 ? 1 : -1;                        // row 1 moves left, row 2 right
+    const tween = gsap.fromTo(track, { xPercent: base > 0 ? 0 : -50 }, {
+      xPercent: base > 0 ? -50 : 0, ease: 'none', repeat: -1,
+      duration: Math.max(24, list.offsetWidth / 60)       // ~60px per second, whatever the content width
+    });
+    const skew = gsap.quickTo(track, 'skewX', { duration: 0.5, ease: 'power3.out' });
+    row.addEventListener('pointerenter', () => gsap.to(tween, { timeScale: 0.25, duration: 0.6 }));
+    row.addEventListener('pointerleave', () => gsap.to(tween, { timeScale: 1, duration: 0.6 }));
+    return { tween, skew };
+  });
+  let bandDir = 1;
   ScrollTrigger.create({
-    trigger: 'body', start: 0, end: 'max',
+    trigger: '.band', start: 'top bottom', end: 'bottom top',
     onUpdate: self => {
       const v = self.getVelocity();
-      dir = self.direction;
-      const boost = gsap.utils.clamp(-6, 6, v / 300);
-      gsap.to(marquee, { timeScale: dir * (1 + Math.abs(boost)), duration: 0.2, overwrite: true });
-      gsap.to(marquee, { timeScale: dir, duration: 1.2, delay: 0.2, ease: 'power2.out' });
-    }
+      if (self.direction !== bandDir) bandDir = self.direction;
+      const boost = 1 + Math.min(4, Math.abs(v) / 500);
+      bandRows.forEach(({ tween, skew }) => {
+        gsap.to(tween, { timeScale: bandDir * boost, duration: 0.25, overwrite: true });
+        gsap.to(tween, { timeScale: bandDir, duration: 1.2, delay: 0.25, ease: 'power2.out' });
+        skew(gsap.utils.clamp(-8, 8, -v / 300));
+      });
+    },
+    onLeave: () => bandRows.forEach(({ skew }) => skew(0)),
+    onLeaveBack: () => bandRows.forEach(({ skew }) => skew(0))
+  });
+  ScrollTrigger.addEventListener('scrollEnd', () => bandRows.forEach(({ skew }) => skew(0)));
+  gsap.from('.band__row', { opacity: 0, y: 24, duration: 1.2, ease: 'expo.out', stagger: 0.12, scrollTrigger: { trigger: '.band', start: 'top 95%' } });
+
+  /* --- Section heading rules draw across as each section arrives --- */
+  $$('.section-head').forEach(head => {
+    gsap.fromTo(head, { '--draw': 0 }, {
+      '--draw': 1, duration: 1.4, ease: 'expo.out',
+      scrollTrigger: { trigger: head, start: 'top 88%' }
+    });
+    gsap.from(head.children, { opacity: 0, x: -12, duration: 0.8, ease: 'power3.out', stagger: 0.08, scrollTrigger: { trigger: head, start: 'top 88%' } });
+  });
+
+  /* --- Lists settle in one item after another --- */
+  $$('.skill-list').forEach(list => gsap.from(list.children, {
+    opacity: 0, x: -16, duration: 0.7, ease: 'power3.out', stagger: 0.07,
+    scrollTrigger: { trigger: list, start: 'top 88%' }
+  }));
+  $$('.pcard .tags, .featured .tags').forEach(tags => gsap.from(tags.children, {
+    opacity: 0, y: 10, duration: 0.6, ease: 'power3.out', stagger: 0.05,
+    scrollTrigger: { trigger: tags, start: 'top 92%' }
+  }));
+  gsap.from('.contact__info > *', {
+    opacity: 0, y: 16, duration: 0.8, ease: 'power3.out', stagger: 0.08,
+    scrollTrigger: { trigger: '.contact__info', start: 'top 85%' }
+  });
+  gsap.from('.form .field, .form .btn--submit', {
+    opacity: 0, y: 16, duration: 0.8, ease: 'power3.out', stagger: 0.08,
+    scrollTrigger: { trigger: '.form', start: 'top 85%' }
   });
 
   /* --- Section titles: words rise from mask --- */
