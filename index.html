@@ -83,9 +83,9 @@
         "name": "Selected work by Deepak C K",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "item": { "@type": "SoftwareApplication", "name": "Sanchara", "url": "https://thesanchara.com", "applicationCategory": "TravelApplication", "operatingSystem": "Android, iOS", "author": { "@id": "https://www.deepak-ck.in/#person" } } },
-          { "@type": "ListItem", "position": 2, "item": { "@type": "SoftwareApplication", "name": "SafeRent", "url": "https://play.google.com/store/apps/details?id=com.saferent.mobile", "applicationCategory": "BusinessApplication", "operatingSystem": "Android" } },
-          { "@type": "ListItem", "position": 3, "item": { "@type": "WebApplication", "name": "Orbit Prep", "url": "https://orbit-prep.web.app/", "applicationCategory": "EducationalApplication", "description": "Free mock tests and practice for ISRO recruitment exams.", "author": { "@id": "https://www.deepak-ck.in/#person" } } },
-          { "@type": "ListItem", "position": 4, "item": { "@type": "WebApplication", "name": "PSC Prep Studio", "url": "https://psc-prep-studio.vercel.app/", "applicationCategory": "EducationalApplication", "description": "Kerala PSC exam preparation in English and Malayalam with mock tests, previous-year questions, AI practice and Free/Pro plans.", "author": { "@id": "https://www.deepak-ck.in/#person" } } }
+          { "@type": "ListItem", "position": 2, "item": { "@type": "WebApplication", "name": "Orbit Prep", "url": "https://orbit-prep.vercel.app/", "applicationCategory": "EducationalApplication", "description": "ISRO recruitment exam preparation with official-pattern mock tests, shared question bank, AI practice and Free/Pro plans.", "author": { "@id": "https://www.deepak-ck.in/#person" } } },
+          { "@type": "ListItem", "position": 3, "item": { "@type": "WebApplication", "name": "PSC Prep Studio", "url": "https://psc-prep-studio.vercel.app/", "applicationCategory": "EducationalApplication", "description": "Kerala PSC exam preparation in English and Malayalam with mock tests, previous-year questions, AI practice and Free/Pro plans.", "author": { "@id": "https://www.deepak-ck.in/#person" } } },
+          { "@type": "ListItem", "position": 4, "item": { "@type": "SoftwareApplication", "name": "SafeRent", "url": "https://play.google.com/store/apps/details?id=com.saferent.mobile", "applicationCategory": "BusinessApplication", "operatingSystem": "Android" } }
         ]
       }
     ]
@@ -337,8 +337,10 @@
                   </ul>
                 </details>
                 <details class="proj-acc">
-                  <summary><span>Orbit Prep</span><small>ISRO exam prep</small><i aria-hidden="true"></i></summary>
+                  <summary><span>Orbit Prep</span><small>ISRO exam prep · Free &amp; Pro plans</small><i aria-hidden="true"></i></summary>
                   <ul>
+                    <li>Built Free and Pro plans with Razorpay: pay-per-test credits and 1, 3, 6, and 12-month Pro subscriptions for unlimited mock tests, with secure payments and instant activation.</li>
+                    <li>Secured payments end to end: server-side verification, webhook handling for closed tabs, and once-only settlement in Firestore.</li>
                     <li>Mock tests on the official ISRO pattern for 17 posts and 54 subjects and trades, with a shared question bank built from aspirants' uploads.</li>
                     <li>AI practice and explanations through Firebase AI Logic, with personal Gemini or OpenAI keys used first and lighter models as fallback.</li>
                     <li>Real exam conditions in the browser: full screen, tab-switch detection, auto-submit and a timer that survives a refresh.</li>
@@ -562,7 +564,35 @@
         <!-- Grid -->
         <div class="pgrid">
           <article class="pcard spotlight">
-              <div class="pcard__top"><span class="pcard__index">02</span><p class="badge">Published app</p></div>
+              <div class="pcard__top"><span class="pcard__index">02</span><p class="badge">Own product</p></div>
+              <div class="pcard__visual">
+                <span class="pcard__rings" aria-hidden="true"></span>
+                <img class="pcard__halo" src="images/p-orbit-prep.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                <img class="pcard__logo" src="images/p-orbit-prep.webp" alt="Orbit Prep logo" width="320" height="320" loading="lazy" decoding="async">
+              </div>
+              <div class="pcard__body">
+                <h3 class="pcard__title">Orbit Prep</h3>
+                <p class="pcard__desc">An ISRO exam preparation platform for 17 posts and 54 subjects and trades. Features official-pattern mock tests with real exam conditions, a shared question bank, and AI practice. Free and Pro plans, with pay-per-test credits and Pro subscriptions paid through Razorpay.</p>
+                <ul class="tags"><li>React</li><li>TypeScript</li><li>Firebase</li><li>Gemini AI</li><li>Razorpay</li></ul>
+                <div class="pcard__foot"><a class="link-arrow" href="https://orbit-prep.vercel.app/" target="_blank" rel="noopener">View project <span aria-hidden="true">↗</span></a></div>
+              </div>
+            </article>
+          <article class="pcard spotlight">
+              <div class="pcard__top"><span class="pcard__index">03</span><p class="badge">Own product</p></div>
+              <div class="pcard__visual">
+                <span class="pcard__rings" aria-hidden="true"></span>
+                <img class="pcard__halo" src="images/p-psc-prep.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
+                <img class="pcard__logo" src="images/p-psc-prep.webp" alt="PSC Prep Studio logo" width="320" height="320" loading="lazy" decoding="async">
+              </div>
+              <div class="pcard__body">
+                <h3 class="pcard__title">PSC Prep Studio</h3>
+                <p class="pcard__desc">A Kerala PSC preparation platform in English and Malayalam. Mock tests follow the official preliminary syllabi, with 35,000+ previous-year questions, AI practice, searchable Malayalam PDFs and a help centre. Free and Pro plans, with subscriptions, test credits and resource packs paid through Razorpay.</p>
+                <ul class="tags"><li>React</li><li>TypeScript</li><li>TanStack Start</li><li>Firebase</li><li>Gemini AI</li><li>Razorpay</li></ul>
+                <div class="pcard__foot"><a class="link-arrow" href="https://psc-prep-studio.vercel.app/" target="_blank" rel="noopener">View project <span aria-hidden="true">↗</span></a></div>
+              </div>
+            </article>
+          <article class="pcard spotlight">
+              <div class="pcard__top"><span class="pcard__index">04</span><p class="badge">Published app</p></div>
               <div class="pcard__visual">
                 <span class="pcard__rings" aria-hidden="true"></span>
                 <img class="pcard__halo" src="images/p-saferent.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
@@ -576,7 +606,7 @@
               </div>
             </article>
           <article class="pcard spotlight">
-              <div class="pcard__top"><span class="pcard__index">03</span><p class="badge">Client project</p></div>
+              <div class="pcard__top"><span class="pcard__index">05</span><p class="badge">Client project</p></div>
               <div class="pcard__visual">
                 <span class="pcard__rings" aria-hidden="true"></span>
                 <img class="pcard__halo" src="images/p-ptf.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
@@ -590,7 +620,7 @@
               </div>
             </article>
           <article class="pcard spotlight">
-              <div class="pcard__top"><span class="pcard__index">04</span><p class="badge">Company project</p></div>
+              <div class="pcard__top"><span class="pcard__index">06</span><p class="badge">Company project</p></div>
               <div class="pcard__visual">
                 <span class="pcard__rings" aria-hidden="true"></span>
                 <img class="pcard__halo" src="images/p-workluge.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
@@ -604,7 +634,7 @@
               </div>
             </article>
           <article class="pcard spotlight">
-              <div class="pcard__top"><span class="pcard__index">05</span><p class="badge">Company project</p></div>
+              <div class="pcard__top"><span class="pcard__index">07</span><p class="badge">Company project</p></div>
               <div class="pcard__visual">
                 <span class="pcard__rings" aria-hidden="true"></span>
                 <img class="pcard__halo" src="images/p-adluge.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
@@ -618,7 +648,7 @@
               </div>
             </article>
           <article class="pcard spotlight">
-              <div class="pcard__top"><span class="pcard__index">06</span><p class="badge">Company project</p></div>
+              <div class="pcard__top"><span class="pcard__index">08</span><p class="badge">Company project</p></div>
               <div class="pcard__visual">
                 <span class="pcard__rings" aria-hidden="true"></span>
                 <img class="pcard__halo" src="images/p-callluge.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
@@ -632,7 +662,7 @@
               </div>
             </article>
           <article class="pcard spotlight">
-              <div class="pcard__top"><span class="pcard__index">07</span><p class="badge">Client project</p></div>
+              <div class="pcard__top"><span class="pcard__index">09</span><p class="badge">Client project</p></div>
               <div class="pcard__visual">
                 <span class="pcard__rings" aria-hidden="true"></span>
                 <img class="pcard__halo" src="images/p-dtrips.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
@@ -643,34 +673,6 @@
                 <p class="pcard__desc">A travel booking app for mobile and web, with hotel and flight search, Razorpay payments and Firebase notifications for real-time booking updates.</p>
                 <ul class="tags"><li>Flutter</li><li>Spring Boot</li><li>Firebase</li><li>Razorpay</li></ul>
                 <div class="pcard__foot"><span class="link-muted">Private project</span></div>
-              </div>
-            </article>
-          <article class="pcard spotlight">
-              <div class="pcard__top"><span class="pcard__index">08</span><p class="badge">Own product</p></div>
-              <div class="pcard__visual">
-                <span class="pcard__rings" aria-hidden="true"></span>
-                <img class="pcard__halo" src="images/p-orbit-prep.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
-                <img class="pcard__logo" src="images/p-orbit-prep.webp" alt="Orbit Prep logo" width="320" height="320" loading="lazy" decoding="async">
-              </div>
-              <div class="pcard__body">
-                <h3 class="pcard__title">Orbit Prep</h3>
-                <p class="pcard__desc">A free practice space for ISRO recruitment written tests. Mock tests follow the official pattern for 17 posts and 54 subjects and trades, with a shared question bank, AI practice and explanations, reports that show what to study next, read-aloud questions and real exam conditions like full screen and tab-switch detection.</p>
-                <ul class="tags"><li>React</li><li>TypeScript</li><li>Firebase</li><li>Gemini AI</li></ul>
-                <div class="pcard__foot"><a class="link-arrow" href="https://orbit-prep.web.app/" target="_blank" rel="noopener">View project <span aria-hidden="true">↗</span></a></div>
-              </div>
-            </article>
-          <article class="pcard spotlight">
-              <div class="pcard__top"><span class="pcard__index">09</span><p class="badge">Own product</p></div>
-              <div class="pcard__visual">
-                <span class="pcard__rings" aria-hidden="true"></span>
-                <img class="pcard__halo" src="images/p-psc-prep.webp" alt="" aria-hidden="true" loading="lazy" decoding="async">
-                <img class="pcard__logo" src="images/p-psc-prep.webp" alt="PSC Prep Studio logo" width="320" height="320" loading="lazy" decoding="async">
-              </div>
-              <div class="pcard__body">
-                <h3 class="pcard__title">PSC Prep Studio</h3>
-                <p class="pcard__desc">A Kerala PSC preparation platform in English and Malayalam. Mock tests follow the official preliminary syllabi, with 35,000+ previous-year questions, AI practice, searchable Malayalam PDFs and a help centre. Free and Pro plans, with subscriptions, test credits and resource packs paid through Razorpay.</p>
-                <ul class="tags"><li>React</li><li>TypeScript</li><li>TanStack Start</li><li>Firebase</li><li>Gemini AI</li><li>Razorpay</li></ul>
-                <div class="pcard__foot"><a class="link-arrow" href="https://psc-prep-studio.vercel.app/" target="_blank" rel="noopener">View project <span aria-hidden="true">↗</span></a></div>
               </div>
             </article>
           <article class="pcard pcard--wide spotlight">
