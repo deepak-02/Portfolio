@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://deepak-ck.in/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <loc>https://www.deepak-ck.in/</loc>
+    <lastmod>2026-11-07</lastmod>
+    <image:image>
+      <image:loc>https://www.deepak-ck.in/images/deepak.jpg</image:loc>
+    </image:image>
   </url>
 </urlset>

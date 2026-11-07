@@ -12,7 +12,8 @@
   // lite = smartwatches, keypad phones, old browsers, data-saver (decided in <head>)
   const LITE = !!window.__LITE__;
   const mq = q => !!(window.matchMedia && window.matchMedia(q).matches);
-  const reduceMotion = LITE || mq('(prefers-reduced-motion: reduce)');
+  const BOT = !!window.__BOT__; // crawlers and speed tests get the finished page, no motion
+  const reduceMotion = LITE || BOT || mq('(prefers-reduced-motion: reduce)');
   const finePointer = !LITE && mq('(hover: hover) and (pointer: fine)');
   const hasGSAP = !LITE && typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   const API = 'https://portfolio-backend-yq1y.onrender.com';
@@ -67,7 +68,6 @@
   function splitWords(el, wrap = true) {
     // keeps inline elements (em) intact, splits their words too
     const label = el.textContent.trim().replace(/\s+/g, ' ');
-    el.setAttribute('aria-label', label);
     const out = [];
     const walk = (node, parent) => {
       node.childNodes.forEach(n => {
@@ -101,6 +101,11 @@
     walk(el, frag);
     el.innerHTML = '';
     while (frag.firstChild) el.appendChild(frag.firstChild);
+    // screen readers read one clean copy; the animated word spans are hidden from them
+    const sr = document.createElement('span');
+    sr.className = 'sr-only';
+    sr.textContent = label;
+    el.appendChild(sr);
     return out;
   }
 
@@ -422,8 +427,14 @@
       }
     });
 
-    // wake the (sleeping) Render backend in the background
-    fetch(API + '/').catch(() => {});
+    // wake the (sleeping) Render backend only when someone heads for the form
+    let woke = false;
+    const wake = () => { if (woke || BOT) return; woke = true; fetch(API + '/', { mode: 'no-cors' }).catch(() => {}); };
+    form.addEventListener('focusin', wake, { once: true });
+    if ('IntersectionObserver' in window) {
+      const wio = new IntersectionObserver(([en]) => { if (en.isIntersecting) { wake(); wio.disconnect(); } }, { rootMargin: '600px 0px' });
+      wio.observe(form);
+    }
   })();
 
   /* ---------- Accordion animation for <details> ---------- */
@@ -455,20 +466,9 @@
 
   const finishLoading = () => root.classList.remove('is-loading');
 
-  /* --- Hero name: one line, fitted exactly to the content width --- */
+  /* --- Hero name: sized in CSS (fits the content width with no layout shift) --- */
   const heroTitle = $('.hero__title');
   const heroName = $('.hero__name');
-  const fitHero = () => {
-    const box = $('.hero__content');
-    const cs = getComputedStyle(box);
-    const avail = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-    heroTitle.style.fontSize = '100px';
-    const w = heroName.getBoundingClientRect().width;
-    if (w > 0) heroTitle.style.fontSize = Math.min(Math.floor(100 * avail / w * 0.985), 300) + 'px';
-  };
-  fitHero();
-  addEventListener('resize', () => { clearTimeout(fitHero._t); fitHero._t = setTimeout(() => { fitHero(); window.ScrollTrigger && ScrollTrigger.refresh(); }, 120); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHero);
 
   /* --- Hero name: liquid "expand" hover — letters near the pointer stretch,
          brighten and push their neighbours apart --- */
@@ -487,7 +487,7 @@
     function frame() {
       raf = 0;
       active += (activeT - active) * 0.08;
-      const fs = parseFloat(heroTitle.style.fontSize) || 160;
+      const fs = parseFloat(getComputedStyle(heroTitle).fontSize) || 160;
       const sigX = fs * 0.75, sigY = fs * 0.9;
       let moving = Math.abs(activeT - active) > 0.002;
       outers.forEach((o, i) => {
@@ -637,195 +637,239 @@
       .add(onReveal, '<0.35');
   }
 
-  /* --- Hero scroll-out parallax --- */
-  gsap.to('.hero__title', {
-    yPercent: -18, opacity: 0.15, ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-  });
-  gsap.to('.hero__glow', {
-    yPercent: 30, scale: 1.2, ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  /* Everything below the first screen is set up in small steps, one per task,
+     so the page stays responsive while it loads (no long main-thread tasks) */
+  const stages = [];
+  const stage = fn => stages.push(fn);
+
+  stage(() => {
+    /* --- Hero scroll-out parallax --- */
+    gsap.to('.hero__title', {
+      yPercent: -18, opacity: 0.15, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+    gsap.to('.hero__glow', {
+      yPercent: 30, scale: 1.2, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
   });
 
-  /* --- Tech band: two rows drift in opposite directions; scrolling speeds them up,
-         flips their direction and leans the type with the scroll velocity --- */
-  const bandRows = $$('.band__row').map((row, i) => {
-    const track = row.querySelector('.band__track');
-    const list = row.querySelector('.band__list');
-    track.appendChild(list.cloneNode(true)).setAttribute('aria-hidden', 'true');
-    const base = i === 0 ? 1 : -1;                        // row 1 moves left, row 2 right
-    const tween = gsap.fromTo(track, { xPercent: base > 0 ? 0 : -50 }, {
-      xPercent: base > 0 ? -50 : 0, ease: 'none', repeat: -1,
-      duration: Math.max(24, list.offsetWidth / 60)       // ~60px per second, whatever the content width
-    });
-    const skew = gsap.quickTo(track, 'skewX', { duration: 0.5, ease: 'power3.out' });
-    row.addEventListener('pointerenter', () => gsap.to(tween, { timeScale: 0.25, duration: 0.6 }));
-    row.addEventListener('pointerleave', () => gsap.to(tween, { timeScale: 1, duration: 0.6 }));
-    return { tween, skew };
-  });
-  let bandDir = 1;
-  ScrollTrigger.create({
-    trigger: '.band', start: 'top bottom', end: 'bottom top',
-    onUpdate: self => {
-      const v = self.getVelocity();
-      if (self.direction !== bandDir) bandDir = self.direction;
-      const boost = 1 + Math.min(4, Math.abs(v) / 500);
-      bandRows.forEach(({ tween, skew }) => {
-        gsap.to(tween, { timeScale: bandDir * boost, duration: 0.25, overwrite: true });
-        gsap.to(tween, { timeScale: bandDir, duration: 1.2, delay: 0.25, ease: 'power2.out' });
-        skew(gsap.utils.clamp(-8, 8, -v / 300));
+  stage(() => {
+    /* --- Tech band: two rows drift in opposite directions; scrolling speeds them up,
+           flips their direction and leans the type with the scroll velocity --- */
+    const bandRows = $$('.band__row').map((row, i) => {
+      const track = row.querySelector('.band__track');
+      const list = row.querySelector('.band__list');
+      track.appendChild(list.cloneNode(true)).setAttribute('aria-hidden', 'true');
+      const base = i === 0 ? 1 : -1;                        // row 1 moves left, row 2 right
+      const tween = gsap.fromTo(track, { xPercent: base > 0 ? 0 : -50 }, {
+        xPercent: base > 0 ? -50 : 0, ease: 'none', repeat: -1,
+        duration: Math.max(24, list.offsetWidth / 60)       // ~60px per second, whatever the content width
       });
-    },
-    onLeave: () => bandRows.forEach(({ skew }) => skew(0)),
-    onLeaveBack: () => bandRows.forEach(({ skew }) => skew(0))
-  });
-  ScrollTrigger.addEventListener('scrollEnd', () => bandRows.forEach(({ skew }) => skew(0)));
-  gsap.from('.band__row', { opacity: 0, y: 24, duration: 1.2, ease: 'expo.out', stagger: 0.12, scrollTrigger: { trigger: '.band', start: 'top 95%' } });
-
-  /* --- Section heading rules draw across as each section arrives --- */
-  $$('.section-head').forEach(head => {
-    gsap.fromTo(head, { '--draw': 0 }, {
-      '--draw': 1, duration: 1.4, ease: 'expo.out',
-      scrollTrigger: { trigger: head, start: 'top 88%' }
+      const skew = gsap.quickTo(track, 'skewX', { duration: 0.5, ease: 'power3.out' });
+      row.addEventListener('pointerenter', () => gsap.to(tween, { timeScale: 0.25, duration: 0.6 }));
+      row.addEventListener('pointerleave', () => gsap.to(tween, { timeScale: 1, duration: 0.6 }));
+      return { tween, skew };
     });
-    gsap.from(head.children, { opacity: 0, x: -12, duration: 0.8, ease: 'power3.out', stagger: 0.08, scrollTrigger: { trigger: head, start: 'top 88%' } });
-  });
-
-  /* --- Lists settle in one item after another --- */
-  $$('.skill-list').forEach(list => gsap.from(list.children, {
-    opacity: 0, x: -16, duration: 0.7, ease: 'power3.out', stagger: 0.07,
-    scrollTrigger: { trigger: list, start: 'top 88%' }
-  }));
-  $$('.pcard .tags, .featured .tags').forEach(tags => gsap.from(tags.children, {
-    opacity: 0, y: 10, duration: 0.6, ease: 'power3.out', stagger: 0.05,
-    scrollTrigger: { trigger: tags, start: 'top 92%' }
-  }));
-  gsap.from('.contact__info > *', {
-    opacity: 0, y: 16, duration: 0.8, ease: 'power3.out', stagger: 0.08,
-    scrollTrigger: { trigger: '.contact__info', start: 'top 85%' }
-  });
-  gsap.from('.form .field, .form .btn--submit', {
-    opacity: 0, y: 16, duration: 0.8, ease: 'power3.out', stagger: 0.08,
-    scrollTrigger: { trigger: '.form', start: 'top 85%' }
-  });
-
-  /* --- Section titles: words rise from mask --- */
-  titleWords.forEach(words => {
-    gsap.from(words, {
-      yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.06,
-      scrollTrigger: { trigger: words[0].closest('h2'), start: 'top 85%' }
-    });
-  });
-
-  /* --- About statement: scrubbed word highlight --- */
-  gsap.fromTo(scrubWords, { opacity: 0.16 }, {
-    opacity: 1, ease: 'none', stagger: 0.1,
-    scrollTrigger: { trigger: '.about__statement', start: 'top 80%', end: 'bottom 45%', scrub: true }
-  });
-
-  /* --- About photo reveal + parallax + colour on mobile --- */
-  gsap.fromTo('.about__photo-frame', { clipPath: 'inset(18% 12% 18% 12% round 28px)' }, {
-    clipPath: 'inset(0% 0% 0% 0% round 28px)', ease: 'expo.out', duration: 1.6,
-    scrollTrigger: { trigger: '.about__photo', start: 'top 80%' }
-  });
-  gsap.fromTo('.about__photo img', { scale: 1.25, yPercent: -4 }, {
-    scale: 1.05, yPercent: 4, ease: 'none',
-    scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true }
-  });
-  if (!finePointer) {
-    ScrollTrigger.create({ trigger: '.about__photo', start: 'top 55%', end: 'bottom 30%', toggleClass: { targets: '.about__photo', className: 'is-color' } });
-  }
-
-  /* --- Generic reveal (batched, staggered) --- */
-  gsap.set('[data-reveal]', { y: 40, opacity: 0 });
-  ScrollTrigger.batch('[data-reveal]', {
-    start: 'top 88%',
-    onEnter: batch => gsap.to(batch, { y: 0, opacity: 1, duration: 1.1, ease: 'expo.out', stagger: 0.08, overwrite: true, clearProps: 'transform' })
-  });
-
-  /* --- Counters --- */
-  $$('.js-counter').forEach(c => {
-    const o = { v: 0 };
+    let bandDir = 1;
     ScrollTrigger.create({
-      trigger: c, start: 'top 90%', once: true,
-      onEnter: () => gsap.to(o, { v: +c.dataset.to, duration: 1.8, ease: 'power3.out', onUpdate: () => (c.textContent = Math.round(o.v)) })
+      trigger: '.band', start: 'top bottom', end: 'bottom top',
+      onUpdate: self => {
+        const v = self.getVelocity();
+        if (self.direction !== bandDir) bandDir = self.direction;
+        const boost = 1 + Math.min(4, Math.abs(v) / 500);
+        bandRows.forEach(({ tween, skew }) => {
+          gsap.to(tween, { timeScale: bandDir * boost, duration: 0.25, overwrite: true });
+          gsap.to(tween, { timeScale: bandDir, duration: 1.2, delay: 0.25, ease: 'power2.out' });
+          skew(gsap.utils.clamp(-8, 8, -v / 300));
+        });
+      },
+      onLeave: () => bandRows.forEach(({ skew }) => skew(0)),
+      onLeaveBack: () => bandRows.forEach(({ skew }) => skew(0))
+    });
+    ScrollTrigger.addEventListener('scrollEnd', () => bandRows.forEach(({ skew }) => skew(0)));
+    gsap.from('.band__row', { opacity: 0, y: 24, duration: 1.2, ease: 'expo.out', stagger: 0.12, scrollTrigger: { trigger: '.band', start: 'top 95%' } });
+  });
+
+  stage(() => {
+    /* --- Section heading rules draw across as each section arrives --- */
+    $$('.section-head').forEach(head => {
+      gsap.fromTo(head, { '--draw': 0 }, {
+        '--draw': 1, duration: 1.4, ease: 'expo.out',
+        scrollTrigger: { trigger: head, start: 'top 88%' }
+      });
+      gsap.from(head.children, { opacity: 0, x: -12, duration: 0.8, ease: 'power3.out', stagger: 0.08, scrollTrigger: { trigger: head, start: 'top 88%' } });
     });
   });
 
-  /* --- Timeline rail draws with scroll; nodes light up --- */
-  gsap.to('.timeline__fill', {
-    scaleY: 1, ease: 'none',
-    scrollTrigger: { trigger: '.timeline', start: 'top 65%', end: 'bottom 65%', scrub: 0.6 }
-  });
-  $$('.role').forEach(r => ScrollTrigger.create({ trigger: r, start: 'top 65%', toggleClass: { targets: r, className: 'is-active' } }));
-
-  /* --- Metric: numbers punch in --- */
-  gsap.from('.metric__to', {
-    scale: 0.6, opacity: 0, duration: 1, ease: 'back.out(1.6)',
-    scrollTrigger: { trigger: '.metric', start: 'top 80%' }
-  });
-
-  /* --- Skills chips stagger --- */
-  $$('.chips').forEach(ch => gsap.from(ch.children, {
-    y: 16, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.04,
-    scrollTrigger: { trigger: ch, start: 'top 90%' }
-  }));
-
-  /* --- Featured: route draws on scroll --- */
-  const routePath = $('.route__path');
-  if (routePath) {
-    const len = routePath.getTotalLength();
-    gsap.set(routePath, { strokeDasharray: len, strokeDashoffset: len });
-    const rtl = gsap.timeline({ scrollTrigger: { trigger: '.featured', start: 'top 75%', end: 'center 40%', scrub: 0.8 } });
-    rtl.to(routePath, { strokeDashoffset: 0, ease: 'none' })
-       .from('.route__stop', { scale: 0, transformOrigin: 'center', stagger: 0.2, ease: 'back.out(2)' }, 0)
-       .from('.route__pin', { scale: 0, opacity: 0, transformOrigin: 'center' }, '-=0.2');
-    gsap.from('.featured__icon-wrap', {
-      y: 60, rotate: -8, ease: 'none',
-      scrollTrigger: { trigger: '.featured', start: 'top bottom', end: 'bottom top', scrub: true }
+  stage(() => {
+    /* --- Lists settle in one item after another --- */
+    $$('.skill-list').forEach(list => gsap.from(list.children, {
+      opacity: 0, x: -16, duration: 0.7, ease: 'power3.out', stagger: 0.07,
+      scrollTrigger: { trigger: list, start: 'top 88%' }
+    }));
+    $$('.pcard .tags, .featured .tags').forEach(tags => gsap.from(tags.children, {
+      opacity: 0, y: 10, duration: 0.6, ease: 'power3.out', stagger: 0.05,
+      scrollTrigger: { trigger: tags, start: 'top 92%' }
+    }));
+    gsap.from('.contact__info > *', {
+      opacity: 0, y: 16, duration: 0.8, ease: 'power3.out', stagger: 0.08,
+      scrollTrigger: { trigger: '.contact__info', start: 'top 85%' }
     });
-  }
-
-  /* --- Project grid scroll effects ---
-     1. cards rise in with a slight 3D tilt, staggered by column
-     2. the right column drifts at a different speed (parallax stagger) on desktop
-     3. each logo scales/rotates into place as its card travels through the viewport
-     4. the dotted rings turn with scroll */
-  gsap.set('.pcard', { transformOrigin: '50% 100%' });
-  ScrollTrigger.batch('.pcard', {
-    start: 'top 90%',
-    onEnter: batch => gsap.fromTo(batch,
-      { y: 90, opacity: 0, rotateX: 10, scale: 0.96 },
-      { y: 0, opacity: 1, rotateX: 0, scale: 1, duration: 1.3, ease: 'expo.out', stagger: 0.12, overwrite: true })
-  });
-  $$('.pcard').forEach(card => {
-    const logo = card.querySelector('.pcard__logo');
-    const rings = card.querySelector('.pcard__rings');
-    gsap.fromTo(logo, { scale: 0.82, rotate: -8, yPercent: 14 }, {
-      scale: 1, rotate: 0, yPercent: -6, ease: 'none',
-      scrollTrigger: { trigger: card, start: 'top bottom', end: 'center 40%', scrub: 0.6 }
-    });
-    gsap.fromTo(rings, { rotate: -40, scale: 0.9 }, {
-      rotate: 40, scale: 1.08, ease: 'none',
-      scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true }
+    gsap.from('.form .field, .form .btn--submit', {
+      opacity: 0, y: 16, duration: 0.8, ease: 'power3.out', stagger: 0.08,
+      scrollTrigger: { trigger: '.form', start: 'top 85%' }
     });
   });
-  gsap.matchMedia().add('(min-width: 761px)', () => {
-    const right = $$('.pgrid > .pcard:not(.pcard--wide)').filter((_, i) => i % 2 === 1);
-    const drift = gsap.fromTo(right, { y: 70 }, {
-      y: -30, ease: 'none',
-      scrollTrigger: { trigger: '.pgrid', start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+
+  stage(() => {
+    /* --- Section titles: words rise from mask --- */
+    titleWords.forEach(words => {
+      gsap.from(words, {
+        yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.06,
+        scrollTrigger: { trigger: words[0].closest('h2'), start: 'top 85%' }
+      });
     });
-    return () => { drift.scrollTrigger && drift.scrollTrigger.kill(); drift.kill(); gsap.set(right, { clearProps: 'y' }); };
   });
 
-  /* --- Footer giant name --- */
-  gsap.from('.footer__giant', {
-    yPercent: 40, opacity: 0, ease: 'none',
-    scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom bottom', scrub: true }
+  stage(() => {
+    /* --- About statement: scrubbed word highlight --- */
+    gsap.fromTo(scrubWords, { opacity: 0.42 }, {
+      opacity: 1, ease: 'none', stagger: 0.1,
+      scrollTrigger: { trigger: '.about__statement', start: 'top 80%', end: 'bottom 45%', scrub: true }
+    });
   });
 
-  /* Refresh after fonts/images settle */
+  stage(() => {
+    /* --- About photo reveal + parallax + colour on mobile --- */
+    gsap.fromTo('.about__photo-frame', { clipPath: 'inset(18% 12% 18% 12% round 28px)' }, {
+      clipPath: 'inset(0% 0% 0% 0% round 28px)', ease: 'expo.out', duration: 1.6,
+      scrollTrigger: { trigger: '.about__photo', start: 'top 80%' }
+    });
+    gsap.fromTo('.about__photo img', { scale: 1.25, yPercent: -4 }, {
+      scale: 1.05, yPercent: 4, ease: 'none',
+      scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true }
+    });
+    if (!finePointer) {
+      ScrollTrigger.create({ trigger: '.about__photo', start: 'top 55%', end: 'bottom 30%', toggleClass: { targets: '.about__photo', className: 'is-color' } });
+    }
+  });
+
+  stage(() => {
+    /* --- Generic reveal (batched, staggered) --- */
+    gsap.set('[data-reveal]', { y: 40, opacity: 0 });
+    ScrollTrigger.batch('[data-reveal]', {
+      start: 'top 88%',
+      onEnter: batch => gsap.to(batch, { y: 0, opacity: 1, duration: 1.1, ease: 'expo.out', stagger: 0.08, overwrite: true, clearProps: 'transform' })
+    });
+  });
+
+  stage(() => {
+    /* --- Counters --- */
+    $$('.js-counter').forEach(c => {
+      const o = { v: 0 };
+      ScrollTrigger.create({
+        trigger: c, start: 'top 90%', once: true,
+        onEnter: () => gsap.to(o, { v: +c.dataset.to, duration: 1.8, ease: 'power3.out', onUpdate: () => (c.textContent = Math.round(o.v)) })
+      });
+    });
+  });
+
+  stage(() => {
+    /* --- Timeline rail draws with scroll; nodes light up --- */
+    gsap.to('.timeline__fill', {
+      scaleY: 1, ease: 'none',
+      scrollTrigger: { trigger: '.timeline', start: 'top 65%', end: 'bottom 65%', scrub: 0.6 }
+    });
+    $$('.role').forEach(r => ScrollTrigger.create({ trigger: r, start: 'top 65%', toggleClass: { targets: r, className: 'is-active' } }));
+  });
+
+  stage(() => {
+    /* --- Metric: numbers punch in --- */
+    gsap.from('.metric__to', {
+      scale: 0.6, opacity: 0, duration: 1, ease: 'back.out(1.6)',
+      scrollTrigger: { trigger: '.metric', start: 'top 80%' }
+    });
+  });
+
+  stage(() => {
+    /* --- Skills chips stagger --- */
+    $$('.chips').forEach(ch => gsap.from(ch.children, {
+      y: 16, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.04,
+      scrollTrigger: { trigger: ch, start: 'top 90%' }
+    }));
+  });
+
+  stage(() => {
+    /* --- Featured: route draws on scroll --- */
+    const routePath = $('.route__path');
+    if (routePath) {
+      const len = routePath.getTotalLength();
+      gsap.set(routePath, { strokeDasharray: len, strokeDashoffset: len });
+      const rtl = gsap.timeline({ scrollTrigger: { trigger: '.featured', start: 'top 75%', end: 'center 40%', scrub: 0.8 } });
+      rtl.to(routePath, { strokeDashoffset: 0, ease: 'none' })
+         .from('.route__stop', { scale: 0, transformOrigin: 'center', stagger: 0.2, ease: 'back.out(2)' }, 0)
+         .from('.route__pin', { scale: 0, opacity: 0, transformOrigin: 'center' }, '-=0.2');
+      gsap.from('.featured__icon-wrap', {
+        y: 60, rotate: -8, ease: 'none',
+        scrollTrigger: { trigger: '.featured', start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    }
+  });
+
+  stage(() => {
+    /* --- Project grid scroll effects ---
+       1. cards rise in with a slight 3D tilt, staggered by column
+       2. the right column drifts at a different speed (parallax stagger) on desktop
+       3. each logo scales/rotates into place as its card travels through the viewport
+       4. the dotted rings turn with scroll */
+    gsap.set('.pcard', { transformOrigin: '50% 100%' });
+    ScrollTrigger.batch('.pcard', {
+      start: 'top 90%',
+      onEnter: batch => gsap.fromTo(batch,
+        { y: 90, opacity: 0, rotateX: 10, scale: 0.96 },
+        { y: 0, opacity: 1, rotateX: 0, scale: 1, duration: 1.3, ease: 'expo.out', stagger: 0.12, overwrite: true })
+    });
+    $$('.pcard').forEach(card => {
+      const logo = card.querySelector('.pcard__logo');
+      const rings = card.querySelector('.pcard__rings');
+      gsap.fromTo(logo, { scale: 0.82, rotate: -8, yPercent: 14 }, {
+        scale: 1, rotate: 0, yPercent: -6, ease: 'none',
+        scrollTrigger: { trigger: card, start: 'top bottom', end: 'center 40%', scrub: 0.6 }
+      });
+      gsap.fromTo(rings, { rotate: -40, scale: 0.9 }, {
+        rotate: 40, scale: 1.08, ease: 'none',
+        scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true }
+      });
+    });
+    gsap.matchMedia().add('(min-width: 761px)', () => {
+      const right = $$('.pgrid > .pcard:not(.pcard--wide)').filter((_, i) => i % 2 === 1);
+      const drift = gsap.fromTo(right, { y: 70 }, {
+        y: -30, ease: 'none',
+        scrollTrigger: { trigger: '.pgrid', start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+      });
+      return () => { drift.scrollTrigger && drift.scrollTrigger.kill(); drift.kill(); gsap.set(right, { clearProps: 'y' }); };
+    });
+  });
+
+  stage(() => {
+    /* --- Footer giant name --- */
+    gsap.from('.footer__giant', {
+      yPercent: 40, opacity: 0, ease: 'none',
+      scrollTrigger: { trigger: '.footer', start: 'top bottom', end: 'bottom bottom', scrub: true }
+    });
+
+    /* Refresh after fonts/images settle */
+  });
+
+  const runStages = () => {
+    const fn = stages.shift();
+    if (!fn) { ScrollTrigger.refresh(); return; }
+    fn();
+    setTimeout(runStages, 0);
+  };
+  setTimeout(runStages, 0);
+
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
   addEventListener('load', () => ScrollTrigger.refresh());
 })();

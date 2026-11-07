@@ -16,7 +16,9 @@ Device support
 SEO
 - `robots.txt`, `sitemap.xml`, `site.webmanifest`, canonical URL and JSON-LD (Person, ProfilePage, WebSite, projects) live at https://deepak-ck.in/.
 - `images/og-image.png` is the 1200×630 share preview.
-- Crawlers and speed tests (user agents containing bot/crawl/spider/lighthouse/headless) skip the loader.
+- Fonts are self-hosted in `fonts/` (Latin subsets of Geist, Geist Mono and Instrument Serif, SIL OFL). `vercel.json` sets long cache headers.
+- The canonical address is https://www.deepak-ck.in/ (the bare domain redirects there).
+- Crawlers, speed tests and automated browsers skip the loader and animations (add `?motion` to the URL to force them).
 
 Run locally: open `index.html`, or `npx serve .`
 Deploy: push to GitHub and import in Vercel (framework preset: Other).
